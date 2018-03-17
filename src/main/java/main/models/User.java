@@ -19,6 +19,9 @@ public class User {
     @JsonProperty(value = "password")
     private String password;
 
+    @JsonProperty(value = "avatar")
+    private String avatar;
+
     private static final AtomicLong ID_GENERATOR = new AtomicLong(0);
 
     public User() {
@@ -32,6 +35,14 @@ public class User {
         this.email = email;
         this.password = password;
         this.login = login;
+    }
+
+    public User(String email, String login, String password, String avatar) {
+        this.id = ID_GENERATOR.getAndIncrement();
+        this.email = email;
+        this.password = password;
+        this.login = login;
+        this.avatar = avatar;
     }
 
     public Boolean equalEmail(User user) {
@@ -79,4 +90,11 @@ public class User {
         return id;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }

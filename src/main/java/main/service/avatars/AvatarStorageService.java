@@ -1,5 +1,6 @@
 package main.service.avatars;
 
+import main.models.User;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,13 +12,12 @@ public interface AvatarStorageService {
 
     void init();
 
-    void store(MultipartFile file);
+    void saveAvatar(MultipartFile file, User curUser);
 
-    Stream<Path> loadAll();
+    Stream<Path> getAllAvatars();
 
-    Path load(String filename);
+    Path getPath(String filename);
 
-    Resource loadAsResource(String filename);
+    Resource loadAvatarResource(String filename);
 
-    void deleteAll();
 }

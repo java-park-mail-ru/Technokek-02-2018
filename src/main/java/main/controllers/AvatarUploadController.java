@@ -1,16 +1,17 @@
 package main.controllers;
 
 import main.models.Message;
-import main.service.avatars.AvatarNotFoundException;
+import main.service.avatars.AvatarControllerService;
+import main.service.avatars.AvatarGeneralException;
 import main.service.avatars.AvatarStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class AvatarUploadController {
@@ -22,24 +23,18 @@ public class AvatarUploadController {
         this.avatarStorageService = storageService;
     }
 
-    @GetMapping("/files/{filename:.+}")
+    @GetMapping(value = "/avatars/{avatar:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-
-        final Resource file = avatarStorageService.loadAsResource(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + '"').body(file);
+    public ResponseEntity<Resource> serveFile(@PathVariable String avatar) {
+        return AvatarControllerService.dropAvatar(avatar, avatarStorageService);
     }
 
-    @PostMapping("/upload")
-    public Message<String> handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
-
-        avatarStorageService.store(file);
-        return new Message<String>(true, "AVATAR_SUCCESSFULLY_UPLOADED");
+    @PostMapping("/upload/avatar/")
+    public Message<String> handleFileUpload(@RequestParam("file") MultipartFile file, HttpSession session) {
+        return AvatarControllerService.setAvatar(file, avatarStorageService, session);
     }
 
-    @ExceptionHandler(AvatarNotFoundException.class)
+    @ExceptionHandler(AvatarGeneralException.class)
     public ResponseEntity<?> handleStorageFileNotFound() {
         return ResponseEntity.notFound().build();
     }

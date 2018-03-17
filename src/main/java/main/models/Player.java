@@ -7,34 +7,62 @@ public class Player {
     private Long id;
 
     @JsonProperty(value = "nickname")
-    private String login;
+    private String nickname;
 
     @JsonProperty(value = "score")
     private int score;
 
+    @JsonProperty(value = "email")
+    private String email;
+
+    @JsonProperty(value = "games_number")
+    private int gamesNumber;
+
+    @JsonProperty(value = "avatar")
+    private String avatar;
+
     public Player(User user) {
         this.id = user.getId();
-        this.login = user.getLogin();
+        this.nickname = user.getLogin();
+        this.email = user.getEmail();
+        this.avatar = user.getAvatar();
         this.score = 0;
+        this.gamesNumber = 0;
     }
 
-    public String getLogin() {
-        return login;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public int getGamesNumber() {
+        return gamesNumber;
     }
 }

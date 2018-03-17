@@ -1,7 +1,7 @@
 package main;
 
 
-import main.service.avatars.AvatarStorageProperties;
+import main.properties.FileStorageProperties;
 import main.service.avatars.AvatarStorageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 
 
 @SpringBootApplication
-@EnableConfigurationProperties(AvatarStorageProperties.class)
+@EnableConfigurationProperties(FileStorageProperties.class)
 public class Main {
 
     public static void main(String[] args) {
@@ -22,7 +22,6 @@ public class Main {
     @Bean
     CommandLineRunner init(AvatarStorageService storageService) {
         return (args) -> {
-            storageService.deleteAll();
             storageService.init();
         };
     }
