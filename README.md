@@ -1,7 +1,6 @@
 # 2018_1_Technokek
 Игра про моделирование системы метрополитена и трамвайной сети. Аналогичная игра - Mini Metro.
 
-## heroku backend https://technokek2018.herokuapp.com/scoreboard
 
 ## API:
 
