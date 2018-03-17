@@ -1,136 +1,123 @@
 # 2018_1_Technokek
 Игра про моделирование системы метрополитена и трамвайной сети. Аналогичная игра - Mini Metro.
 
+# [Работающее хероку приложение](https://technokek2018.herokuapp.com/)
 
-## API:
+## Current API for last commit:
 
 ### GET USER:           
 Url: `/user/<id>/`
 ```
-{
-    id,
-    nickname,
-    email,
-    avatar, // url
-    games_number,
-    highscore    
-}
+    {
+        message: {
+            id: 1,
+            nickname: "vitaliycherkov",
+            score: 0,
+            email: "vitaliycherkov@gmail.com",
+            games_number: 0,
+            avatar: null,
+        },
+        successful: true,
+    }
 ```
 
-### GET USER'S HISTORY:   
-Url: `/user/<id\>/history?mode=<game_mode>?page=<page_number>/`
-* game_mode == **MULTIPLAYER**:
-```  
-[
-    // game
-    {
-        date,
-        score,
-        teammate: {
-            id,
-            nickname
-        } // or NULL if anonymous
-    },
-    ...
-]
-```
-* game_mode == **SINGLEPLAYER**:
-```
-[
-    // game
-    {
-        date,
-        score,
-    },
-    ...
-]
+### GET ME:
+Url: `/user/me`
 ```
 
-### GET SCOREBOARD:     
-Url: `/scoreboard/?mode=<game_mode>?user=<id>?page=<page_number>/`
-* game_mode == **MULTIPLAYER**:
-```
-{
-    me: {
-        position,
-        date,
-        score,
-        teammate: {
-            id,
-            nickname
-        } // or NULL if anonymous
-    }, // or NULL if logged out
-    athother: [
-        {
-            date,
-            score,
-            teammate: {
-                id,
-                nickname
-            } // or NULL if anonymous
+    if your id attribute === user ID -> you can get this data
+
+    {
+        message: {
+            id: 1,
+            nickname: "vitaliycherkov",
+            password: 1,
+            email: "vitaliycherkov@gmail.com",
+            avatar: null,
         },
-        ...
-    ]
-}
+        successful: true,
+    }
 ```
-* game_mode == **SINGLEPLAYER**:
+
+#### GET SCOREBOARD:     
+Url: `/scoreboard/`
 ```
-{
-    me: {
-        position,
-        date,
-        score
-    }, // or NULL if logged out
-    athother: [
-        {
-            date,
-            score
+    {
+        message: {
+            another: [
+                {
+                    id: 2,
+                    nickname: "vladbusov",
+                    score: 0,
+                    email: "vladbusov@gmail.com",
+                    games_number: 0,
+                    avatar: null,
+                },
+                {
+                    id: 1,
+                    nickname: "vitaliycherkov",
+                    score: 0,
+                    email: "vitaliycherkov@gmail.com",
+                    games_number: 0,
+                    avatar: null,
+                },
+                {
+                    id: 0,
+                    nickname: "ivansport",
+                    score: 0,
+                    email: "ivansport@gmail.com",
+                    games_number: 0,
+                    avatar: null,
+                },
+            ],
+            me: null,
         },
-        ...
-    ]
-}
+        successful: true,
+    }
 ```
+
 
 ### POST LOGIN          
 Url: `/login/`
 ```
-{
-    email,
-    password
-}
+    {
+        email,
+        password
+    }
 ```
 ### POST REGISTER       
 Url: `/register/`
 ```
-{
-    email,
-    nickname,
-    password
-}
+    {
+        email,
+        nickname,
+        password
+    }
 ```
-### GET ABOUT           
+### GET AVATAR         
+Url: `/avatars/{avatar}`
+```
+        file
+```
+### UPLOAD AVATAR         
+Url: `/upload/avatar/`
+```
+    if your id attribute === user ID -> file uploads
+```
+### ABOUT         
 Url: `/about/`
 ```
-[
     {
-        paragraph
-    },
-    ...
-]
+        message: "Hello, world!",
+        successful: true,
+    }
 ```
-### GET RULES           
-Url: `/rules/`
-```
-[
-    {
-        type: // text or image
-        text: // text or image url 
-    },
-    ...
-]
-```
+
 ### POST EDIT USER      
-Url: `/user/<id>?field=<field_type>/`
+Url: `/user/edit`
+
+    if your id attribute === user ID -> you can edit
+
 * field_type == **EMAIL**
 ```
 {
@@ -147,8 +134,11 @@ Url: `/user/<id>?field=<field_type>/`
 ```
 {
     password,
-    new_password
 }
 ```
-### ИГРОВАЯ ЧАСТЬ
-// Скоро ...
+### LOGOUT:           
+Url: `/logout`
+```
+    if your id attribute === user ID -> you logout
+```
+
