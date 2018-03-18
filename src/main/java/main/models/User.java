@@ -49,6 +49,10 @@ public class User {
         return user.email.equals(this.email);
     }
 
+    public Boolean equalEmailAndPassword(User user) {
+        return user.email.equals(this.email) && user.password.equals(this.password);
+    }
+
     public void editUser(String newEmail, String newLogin, String newPassword) {
         if (!StringUtils.isEmpty(newEmail)) {
             this.email = newEmail;
@@ -96,5 +100,9 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

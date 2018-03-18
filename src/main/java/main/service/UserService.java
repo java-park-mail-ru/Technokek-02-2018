@@ -1,15 +1,23 @@
 package main.service;
 
+import main.dao.UserDao;
 import main.data.UserList;
 import main.models.Message;
 import main.models.Player;
 import main.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+@Service
 public class UserService {
+
+        @Autowired
+        private UserDao userDao;
 
         public static Message notFound(String request) {
             final ArrayList<String> arrayList = new ArrayList<String>();
@@ -18,28 +26,44 @@ public class UserService {
             return new Message<ArrayList>(true, arrayList);
         }
 
-        public static Message registUser(User newbie) {
+        public Message registUser(User newbie) {
             if (!UserList.uniqueUser(newbie.getEmail())) {
                     return new Message<String>(false, "USER_ALREADY_EXISTS");
             }
-            UserList.addUser(newbie);
+
+            // UserList.addUser(newbie);
+
+            userDao.save(newbie);
             return new Message<String>(true, "USER_SUCCESSFULLY_REGISTERED");
         }
 
-        public static Message login(String email, String password, HttpSession session) {
-            if (UserList.login(email, password)) {
+        public Message login(User checkUser, HttpSession session) {
+
+            /*if (UserList.login(email, password)) {
                     session.setAttribute("userId", UserList.getId(email));
                     return new Message<String>(true, "USER_SUCCESSFULLY_LOGIN");
+            }
+            return new Message<String>(false, "WRONG_DATA_FOR_LOGIN");*/
+
+            final List<User> userList = userDao.findAll();
+            for (User cur : userList) {
+                if (cur.equalEmailAndPassword(checkUser)) {
+                    session.setAttribute("userId", cur.getId());
+                    return new Message<String>(true, "USER_SUCCESSFULLY_LOGIN");
+                }
             }
             return new Message<String>(false, "WRONG_DATA_FOR_LOGIN");
         }
 
-        public static Message getUserData(HttpSession session) {
+        public Message getUserData(HttpSession session) {
             final Long id = (Long) session.getAttribute("userId");
             if (id == null) {
                 return new Message<String>(false, "NOT_LOGINED");
             }
-            final User curUser = UserList.getById(id);
+
+            // final User curUser = UserList.getById(id);
+
+            final User curUser = userDao.getById(id);
             if (curUser == null) {
                 return new Message<String>(false, "INVALID_SESSION_ID");
             }
@@ -105,4 +129,16 @@ public class UserService {
             return new Message<String>(true, "Hello, world!");
         }
 
+
+        public List<User> getUsersFromBD() {
+            return userDao.findAll();
+        }
+
+        public UserDao getUserDao() {
+            return userDao;
+        }
+
+        public void setUserDao(UserDao userDao) {
+            this.userDao = userDao;
+        }
 }
