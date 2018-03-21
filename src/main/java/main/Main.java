@@ -5,6 +5,7 @@ import main.dao.UserDao;
 import main.dao.UserDaoSystem;
 import main.properties.FileStorageProperties;
 import main.service.UserService;
+import main.service.avatars.AvatarControllerService;
 import main.service.avatars.AvatarStorageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -56,6 +57,11 @@ public class Main {
     @Bean
     public UserService getUserService() {
         return new UserService();
+    }
+
+    @Bean
+    public AvatarControllerService getAvatarControllerService() {
+        return new AvatarControllerService();
     }
 
 }

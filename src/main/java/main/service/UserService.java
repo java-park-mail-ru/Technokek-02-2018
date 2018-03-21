@@ -1,7 +1,6 @@
 package main.service;
 
 import main.dao.UserDao;
-import main.data.UserList;
 import main.models.Message;
 import main.models.Player;
 import main.models.User;
@@ -27,23 +26,18 @@ public class UserService {
         }
 
         public Message registUser(User newbie) {
-            if (!UserList.uniqueUser(newbie.getEmail())) {
+            final List<User> allUsers = userDao.findAll();
+            for (User user : allUsers) {
+                if (user.equalEmail(newbie)) {
                     return new Message<String>(false, "USER_ALREADY_EXISTS");
+                }
             }
-
-            // UserList.addUser(newbie);
 
             userDao.save(newbie);
             return new Message<String>(true, "USER_SUCCESSFULLY_REGISTERED");
         }
 
         public Message login(User checkUser, HttpSession session) {
-
-            /*if (UserList.login(email, password)) {
-                    session.setAttribute("userId", UserList.getId(email));
-                    return new Message<String>(true, "USER_SUCCESSFULLY_LOGIN");
-            }
-            return new Message<String>(false, "WRONG_DATA_FOR_LOGIN");*/
 
             final List<User> userList = userDao.findAll();
             for (User cur : userList) {
@@ -61,8 +55,6 @@ public class UserService {
                 return new Message<String>(false, "NOT_LOGINED");
             }
 
-            // final User curUser = UserList.getById(id);
-
             final User curUser = userDao.getById(id);
             if (curUser == null) {
                 return new Message<String>(false, "INVALID_SESSION_ID");
@@ -70,41 +62,49 @@ public class UserService {
             return new Message<User>(true, curUser);
         }
 
-        public static Message getScoreBoard(HttpSession session) {
+        public Message getScoreBoard(HttpSession session) {
+            final HashMap<String, List> scoreboard = new HashMap<>();
+            final List<User> users = userDao.findAll();
+            final List<Player> players = new ArrayList<>();
             final Long id = (Long) session.getAttribute("userId");
-            final User curUser = UserList.getById(id);
-            final HashMap<String, ArrayList> scoreList = new HashMap<>();
-            if (Validation.checkId(id) == null) {
-                assert curUser != null;
-                final ArrayList<Player> curUserScore = new ArrayList<>();
-                curUserScore.add(new Player(curUser));
-                scoreList.put("me", curUserScore);
-                final ArrayList<Player> usersScore = UserList.toArrayListPlayersWithoutId(id);
-                scoreList.put("another", usersScore);
-                return new Message<HashMap>(true, scoreList);
+            if (id == null) {
+                for (User user : users) {
+                    players.add(new Player(user));
+                }
+                scoreboard.put("me", null);
+                scoreboard.put("anoyher", players);
+                return new Message<HashMap>(true, scoreboard);
             }
-            scoreList.put("me", null);
-            scoreList.put("another", UserList.toArrayListPlayersWithoutId(null));
-            return new Message<HashMap>(true, scoreList);
+            final User curUser = userDao.getById(id);
+            for (User user : users) {
+                if (!user.equals(curUser)) {
+                    players.add(new Player(user));
+                }
+            }
+            final List<Player> me = new ArrayList<>();
+            me.add(new Player(curUser));
+            scoreboard.put("me", me);
+            scoreboard.put("another", players);
+            return new Message<HashMap>(true, scoreboard);
         }
 
-        public static Message getPlayer(Long id) {
+        public Message getPlayer(Long id) {
             if (id == null) {
                 return new Message<String>(false, "NOT_LOGINED");
             }
-            final User curUser = UserList.getById(id);
+            final User curUser = userDao.getById(id);
             if (curUser == null) {
                 return new Message<String>(false, "INVALID_SESSION_ID");
             }
             return new Message<Player>(true, new Player(curUser));
         }
 
-        public static Message editUser(User user, HttpSession session) {
+        public Message editUser(User user, HttpSession session) {
             final Long id = (Long) session.getAttribute("userId");
             if (id == null) {
                 return new Message<String>(false, "NOT_LOGINED");
             }
-            final User curUser = UserList.getById(id);
+            final User curUser = userDao.getById(id);
             if (curUser == null) {
                 return new Message<String>(false, "INVALID_SESSION_ID");
             }
@@ -112,12 +112,12 @@ public class UserService {
             return new Message<String>(true, "USER_SUCCESSFULLY_CHANGED");
         }
 
-        public static Message loguot(HttpSession session) {
+        public Message loguot(HttpSession session) {
             final Long id = (Long) session.getAttribute("userId");
             if (id == null) {
                 return new Message<String>(false, "NOT_LOGINED");
             }
-            final User curUser = UserList.getById(id);
+            final User curUser = userDao.getById(id);
             if (curUser == null) {
                 return new Message<String>(false, "INVALID_SESSION_ID");
             }
@@ -133,12 +133,5 @@ public class UserService {
         public List<User> getUsersFromBD() {
             return userDao.findAll();
         }
-
-        public UserDao getUserDao() {
-            return userDao;
-        }
-
-        public void setUserDao(UserDao userDao) {
-            this.userDao = userDao;
-        }
+        
 }

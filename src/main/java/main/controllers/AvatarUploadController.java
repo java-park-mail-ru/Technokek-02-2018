@@ -17,10 +17,12 @@ import javax.servlet.http.HttpSession;
 public class AvatarUploadController {
 
     private final AvatarStorageService avatarStorageService;
+    private final AvatarControllerService avatarControllerService;
 
     @Autowired
-    public AvatarUploadController(AvatarStorageService storageService) {
+    public AvatarUploadController(AvatarStorageService storageService, AvatarControllerService avatarControllerService) {
         this.avatarStorageService = storageService;
+        this.avatarControllerService = avatarControllerService;
     }
 
     @GetMapping(value = "/avatars/{avatar:.+}")
@@ -31,7 +33,7 @@ public class AvatarUploadController {
 
     @PostMapping("/upload/avatar/")
     public Message<String> handleFileUpload(@RequestParam("file") MultipartFile file, HttpSession session) {
-        return AvatarControllerService.setAvatar(file, avatarStorageService, session);
+        return avatarControllerService.setAvatar(file, avatarStorageService, session);
     }
 
     @ExceptionHandler(AvatarGeneralException.class)

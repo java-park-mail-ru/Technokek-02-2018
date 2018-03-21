@@ -1,16 +1,22 @@
 package main.service.avatars;
 
-import main.data.UserList;
+import main.dao.UserDao;
 import main.models.Message;
 import main.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
+@Service
 public class AvatarControllerService {
+
+    @Autowired
+    private UserDao userDao;
 
     public static ResponseEntity<Resource> dropAvatar(String avatar, AvatarStorageService avatarStorageService) {
         final Resource file = avatarStorageService.loadAvatarResource(avatar);
@@ -18,12 +24,12 @@ public class AvatarControllerService {
                 "attachment; filename=\"" + file.getFilename() + '"').body(file);
     }
 
-    public static Message<String> setAvatar(MultipartFile file, AvatarStorageService avatarStorageService, HttpSession session) {
+    public Message<String> setAvatar(MultipartFile file, AvatarStorageService avatarStorageService, HttpSession session) {
         final Long id = (Long) session.getAttribute("userId");
         if (id == null) {
             return new Message<String>(false, "NOT_LOGINED");
         }
-        final User curUser = UserList.getById(id);
+        final User curUser = userDao.getById(id);
         if (curUser == null) {
             return new Message<String>(false, "INVALID_SESSION_ID");
         }

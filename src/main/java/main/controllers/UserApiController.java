@@ -20,7 +20,7 @@ public class UserApiController {
 
     @PostMapping(value = "/logout", produces = "application/json")
     public Message logout(HttpSession session) {
-        return UserService.loguot(session);
+        return userService.loguot(session);
     }
 
     @GetMapping(value = "/user/me", produces = "application/json")
@@ -30,7 +30,7 @@ public class UserApiController {
 
     @GetMapping(value = "/user/{id}", produces = "application/json")
     public Message getUser(@PathVariable("id") Long id) {
-        return UserService.getPlayer(id);
+        return userService.getPlayer(id);
     }
 
     @PostMapping(value = "/register", produces = "application/json")
@@ -50,7 +50,7 @@ public class UserApiController {
 
     @PostMapping(value = "/edit", produces = "application/json")
     public Message editProfile(@RequestBody User user, HttpSession session) {
-        return UserService.editUser(user, session);
+        return userService.editUser(user, session);
     }
 
 }

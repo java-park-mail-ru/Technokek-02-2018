@@ -21,7 +21,7 @@ public class GameApiController {
 
     @GetMapping(value = "/scoreboard", produces = "application/json")
     public Message getScoreBoard(HttpSession session) {
-        return UserService.getScoreBoard(session);
+        return userService.getScoreBoard(session);
     }
 
     @GetMapping(value = "/about", produces = "application/json")
