@@ -4,6 +4,8 @@ import main.dao.UserDao;
 import main.models.Message;
 import main.models.Player;
 import main.models.User;
+import main.service.viewService.ScoreBoardMapping;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,32 +61,21 @@ public class UserService {
             if (curUser == null) {
                 return new Message<String>(false, "INVALID_SESSION_ID");
             }
-            return new Message<User>(true, curUser);
+            return new Message<Player>(true, new Player(curUser));
         }
 
         public Message getScoreBoard(HttpSession session) {
-            final HashMap<String, List> scoreboard = new HashMap<>();
-            final List<User> users = userDao.findAll();
-            final List<Player> players = new ArrayList<>();
             final Long id = (Long) session.getAttribute("userId");
-            if (id == null) {
-                for (User user : users) {
-                    players.add(new Player(user));
-                }
-                scoreboard.put("me", null);
-                scoreboard.put("anoyher", players);
-                return new Message<HashMap>(true, scoreboard);
-            }
-            final User curUser = userDao.getById(id);
-            for (User user : users) {
-                if (!user.equals(curUser)) {
-                    players.add(new Player(user));
+            final User user = userDao.getById(id);
+            final List<HashMap> players = new ArrayList<>();
+            for (User curUser : userDao.findAll()) {
+                if (!curUser.equals(user)) {
+                    players.add(ScoreBoardMapping.getScoreInformation(curUser));
                 }
             }
-            final List<Player> me = new ArrayList<>();
-            me.add(new Player(curUser));
-            scoreboard.put("me", me);
+            final HashMap<String, List> scoreboard = new HashMap<>();
             scoreboard.put("another", players);
+            scoreboard.put("me", ScoreBoardMapping.getMeInformation(user));
             return new Message<HashMap>(true, scoreboard);
         }
 

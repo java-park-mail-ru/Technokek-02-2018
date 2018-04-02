@@ -3,6 +3,7 @@ package main.dao;
 import main.mapper.UserMapper;
 import main.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -19,6 +20,11 @@ public class UserDaoSystem implements UserDao {
     @Override
     public User getById(Long id) {
         final String sql = "SELECT * FROM Users WHERE id = ?";
+        try {
+            jdbcTemplate.queryForObject(sql, new UserMapper(), id);
+        } catch (DataAccessException e) {
+            return null;
+        }
         return jdbcTemplate.queryForObject(sql, new UserMapper(), id);
     }
 

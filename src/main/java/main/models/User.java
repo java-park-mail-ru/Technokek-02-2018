@@ -22,6 +22,12 @@ public class User {
     @JsonProperty(value = "avatar")
     private String avatar;
 
+    @JsonProperty(value = "score")
+    private Integer score;
+
+    @JsonProperty(value = "games_number")
+    private Integer gamesNumber;
+
     private static final AtomicLong ID_GENERATOR = new AtomicLong(0);
 
     public User() {
@@ -65,6 +71,21 @@ public class User {
         }
     }
 
+    public Integer getGamesNumber() {
+        return gamesNumber;
+    }
+
+    public void setGamesNumber(Integer gamesNumber) {
+        this.gamesNumber = gamesNumber;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
 
     public String getLogin() {
         return login;

@@ -26,8 +26,8 @@ public class Player {
         this.nickname = user.getLogin();
         this.email = user.getEmail();
         this.avatar = user.getAvatar();
-        this.score = 0;
-        this.gamesNumber = 0;
+        this.score = user.getScore();
+        this.gamesNumber = user.getGamesNumber();
     }
 
     public String getNickname() {
