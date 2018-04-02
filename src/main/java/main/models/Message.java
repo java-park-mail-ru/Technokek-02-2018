@@ -1,6 +1,6 @@
 package main.models;
 
-import org.jetbrains.annotations.Nullable;
+import org.springframework.lang.Nullable;
 
 public class Message<T> {
     private final T message;
@@ -23,7 +23,8 @@ public class Message<T> {
      */
 
     @SuppressWarnings("unused")
-    public @Nullable T getMessage() {
+    public @Nullable
+    T getMessage() {
         return message;
     }
 
