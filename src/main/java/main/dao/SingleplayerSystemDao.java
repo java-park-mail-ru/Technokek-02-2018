@@ -2,6 +2,7 @@ package main.dao;
 
 import main.domain.Singleplayer;
 import main.domain.User;
+import main.mapper.SingleplayerMapper;
 import main.mapper.UserMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -36,7 +37,7 @@ public class SingleplayerSystemDao implements SingleplayerDao {
     @Override
     public Singleplayer getById(Long id) {
         final String sql = "SELECT * FROM singleplayer WHERE game_id = ?";
-        final List<User> result = template.query(sql, ps -> ps.setLong(1, id), UserMapper.USER_MAPPER);
+        final List<Singleplayer> result = template.query(sql, ps -> ps.setLong(1, id), SingleplayerMapper.SINGLEPLAYER_MAPPER);
         if (result.isEmpty()) {
             return null;
         }
@@ -45,6 +46,6 @@ public class SingleplayerSystemDao implements SingleplayerDao {
 
     @Override
     public List<Singleplayer> findAll() {
-        return null;
+        return template.query("select * from singleplayer", SingleplayerMapper.SINGLEPLAYER_MAPPER);
     }
 }

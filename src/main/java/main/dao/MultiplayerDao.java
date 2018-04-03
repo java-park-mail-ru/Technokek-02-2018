@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface MultiplayerDao {
 
-    void save(Multiplayer game);
+    void save(Long userFirstId, Long userSecond, Long score);
 
-    MultiplayerDao getById(Long id);
+    Multiplayer getById(Long id);
 
-    List<MultiplayerDao> findAll();
+    List<Multiplayer> findAll();
 
 }
