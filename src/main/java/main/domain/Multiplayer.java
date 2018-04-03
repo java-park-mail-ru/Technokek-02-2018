@@ -1,6 +1,7 @@
 package main.domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "multiplayer")
@@ -57,5 +58,22 @@ public class Multiplayer {
 
     public void setScore(Long score) {
         this.score = score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Multiplayer game = (Multiplayer) o;
+        return Objects.equals(id, game.id) &&
+                Objects.equals(userFirstId, game.userFirstId) &&
+                Objects.equals(userSecondId, game.userSecondId) &&
+                Objects.equals(score, game.score);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, userFirstId, userSecondId, score);
     }
 }

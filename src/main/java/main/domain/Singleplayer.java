@@ -1,6 +1,7 @@
 package main.domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sigleplayer")
@@ -43,5 +44,21 @@ public class Singleplayer {
 
 	public void setScore(Long score) {
 		this.score = score;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		final Singleplayer game = (Singleplayer) o;
+		return Objects.equals(id, game.id) &&
+				Objects.equals(userId, game.userId) &&
+				Objects.equals(score, game.score);
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(id, userId, score);
 	}
 }
