@@ -1,6 +1,6 @@
 package main.service.avatars;
 
-import main.models.User;
+import main.domain.User;
 import main.properties.FileStorageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

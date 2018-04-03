@@ -1,9 +1,8 @@
 package main.service.avatars;
 
 import main.dao.UserDao;
+import main.domain.User;
 import main.models.Message;
-import main.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +14,12 @@ import javax.servlet.http.HttpSession;
 @Service
 public class AvatarControllerService {
 
-    @Autowired
+
     private UserDao userDao;
+
+    public AvatarControllerService(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     public static ResponseEntity<Resource> dropAvatar(String avatar, AvatarStorageService avatarStorageService) {
         final Resource file = avatarStorageService.loadAvatarResource(avatar);

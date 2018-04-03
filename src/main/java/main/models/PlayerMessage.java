@@ -39,14 +39,6 @@ public class PlayerMessage {
         this.avatar = avatar;
     }
 
-    public PlayerMessage(UserMessage user) {
-        this.id = user.getId();
-        this.nickname = user.getLogin();
-        this.email = user.getEmail();
-        this.avatar = user.getAvatar();
-        this.score = user.getScore();
-        this.gamesNumber = user.getGamesNumber();
-    }
 
     public PlayerMessage(User user) {
         this.id = user.getId();

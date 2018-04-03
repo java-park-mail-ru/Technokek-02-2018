@@ -20,16 +20,14 @@ public class GameApiController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/scoreboard/{mode}/{page}", produces = "application/json")
-    public Message getScoreBoard(@PathVariable("mode") String mode, @PathVariable("page") Long page, HttpSession session) {
-        switch (mode) {
-            case "singleplayer":
-                return userService.getScoreBoardSingleplayer(session, page);
-            case "multiplayer":
-                return userService.getScoreBoardMultiplayer(session, page);
-            default:
-                return new Message<String>(false, "unknown request");
-        }
+    @GetMapping(value = "/scoreboard/singleplayer/{page}", produces = "application/json")
+    public Message getScoreBoardSingle(@PathVariable("page") Long page, HttpSession session) {
+        return userService.getScoreBoardSingleplayer(session, page);
+    }
+
+    @GetMapping(value = "/scoreboard/multiplayer/{page}")
+    public Message getScoreBoardMulti(@PathVariable("page") Long page, HttpSession session) {
+        return userService.getScoreBoardMultiplayer(session, page);
     }
 
     @GetMapping(value = "/about", produces = "application/json")

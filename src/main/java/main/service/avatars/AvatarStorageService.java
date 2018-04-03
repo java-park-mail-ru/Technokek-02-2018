@@ -1,6 +1,6 @@
 package main.service.avatars;
 
-import main.models.User;
+import main.domain.User;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
