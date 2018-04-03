@@ -6,7 +6,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-public class User {
+public class UserMessage {
 
     private Long id;
 
@@ -30,20 +30,20 @@ public class User {
 
     private static final AtomicLong ID_GENERATOR = new AtomicLong(0);
 
-    public User() {
+    public UserMessage() {
         this.id = ID_GENERATOR.getAndIncrement();
     }
 
 
 
-    public User(String email, String login, String password) {
+    public UserMessage(String email, String login, String password) {
         this.id = ID_GENERATOR.getAndIncrement();
         this.email = email;
         this.password = password;
         this.login = login;
     }
 
-    public User(String email, String login, String password, String avatar) {
+    public UserMessage(String email, String login, String password, String avatar) {
         this.id = ID_GENERATOR.getAndIncrement();
         this.email = email;
         this.password = password;
@@ -51,11 +51,11 @@ public class User {
         this.avatar = avatar;
     }
 
-    public Boolean equalEmail(User user) {
+    public Boolean equalEmail(UserMessage user) {
         return user.email.equals(this.email);
     }
 
-    public Boolean equalEmailAndPassword(User user) {
+    public Boolean equalEmailAndPassword(UserMessage user) {
         return user.email.equals(this.email) && user.password.equals(this.password);
     }
 

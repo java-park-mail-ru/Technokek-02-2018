@@ -6,12 +6,20 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String nickname;
 	private String email;
 	private String password;
 	private String avatar;
+
+	public User(Long id, String nickname, String email, String password, String avatar, Integer gamesNumber) {
+		this.id = id;
+		this.nickname = nickname;
+		this.email = email;
+		this.password = password;
+		this.avatar = avatar;
+		this.gamesNumber = gamesNumber;
+	}
 
 	@Column(name = "games_number")
 	private Integer gamesNumber;

@@ -6,16 +6,20 @@ import javax.persistence.*;
 @Table(name = "sigleplayer")
 public class Singleplayer {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "game_id")
 	private Long id;
-
 
 	@Column(name = "user_id")
 	private Long userId;
 
 	@Column(name = "score")
 	private Long score;
+
+	public Singleplayer(Long id, Long userId, Long score) {
+		this.id = id;
+		this.userId = userId;
+		this.score = score;
+	}
 
 	public Long getId() {
 		return id;

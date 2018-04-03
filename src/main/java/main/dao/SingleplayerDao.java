@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SingleplayerDao {
 
-    void save(Singleplayer game);
+    void save(Long userId, Long score);
 
     Singleplayer getById(Long id);
 

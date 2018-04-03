@@ -6,7 +6,6 @@ import javax.persistence.*;
 @Table(name = "multiplayer")
 public class Multiplayer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "game_id")
     private Long id;
 
@@ -20,6 +19,13 @@ public class Multiplayer {
 
     @Column(name = "score")
     private Long score;
+
+    public Multiplayer(Long id, Long userFirstId, Long userSecondId, Long score) {
+        this.id = id;
+        this.userFirstId = userFirstId;
+        this.userSecondId = userSecondId;
+        this.score = score;
+    }
 
     public Long getId() {
         return id;

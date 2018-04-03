@@ -1,13 +1,13 @@
 CREATE TABLE users (
-id SERIAL primary key,
-nickname VARCHAR(255),
-email    VARCHAR(255),
-password VARCHAR(255),
-avatar VARCHAR(255),
-games_number INTEGER
+  id SERIAL primary key,
+  nickname VARCHAR(255),
+  email    VARCHAR(255),
+  password VARCHAR(255),
+  avatar VARCHAR(255),
+  games_number INTEGER
 );
 
-CREATE TABLE sigleplayer (
+CREATE TABLE singleplayer (
   game_id SERIAL primary key,
   score   INTEGER,
   user_id INTEGER REFERENCES users(id)

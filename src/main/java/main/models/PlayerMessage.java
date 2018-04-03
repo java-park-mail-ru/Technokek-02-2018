@@ -2,7 +2,7 @@ package main.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Player {
+public class PlayerMessage {
 
     private Long id;
 
@@ -21,7 +21,7 @@ public class Player {
     @JsonProperty(value = "avatar")
     private String avatar;
 
-    public Player(User user) {
+    public PlayerMessage(UserMessage user) {
         this.id = user.getId();
         this.nickname = user.getLogin();
         this.email = user.getEmail();
