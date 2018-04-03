@@ -1,19 +1,18 @@
 package main.dao;
 
 import main.domain.User;
-import main.models.UserMessage;
 
 import java.util.List;
 
 public interface UserDao {
 
-    void save(UserMessage user);
+    void save(User user);
 
     User getById(Long id);
 
     List<User> findAll();
 
-    void update(UserMessage user);
+    void update(User user);
 
     void delete(int id);
 

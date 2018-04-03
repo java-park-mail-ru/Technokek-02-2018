@@ -22,7 +22,14 @@ public class GameApiController {
 
     @GetMapping(value = "/scoreboard/{mode}/{page}", produces = "application/json")
     public Message getScoreBoard(@PathVariable("mode") String mode, @PathVariable("page") Long page, HttpSession session) {
-        return userService.getScoreBoard(session, mode, page);
+        switch (mode) {
+            case "singleplayer":
+                return userService.getScoreBoardSingleplayer(session, page);
+            case "multiplayer":
+                return userService.getScoreBoardMultiplayer(session, page);
+            default:
+                return new Message<String>(false, "unknown request");
+        }
     }
 
     @GetMapping(value = "/about", produces = "application/json")

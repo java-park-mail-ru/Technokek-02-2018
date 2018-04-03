@@ -3,7 +3,7 @@ package main.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import main.dao.MultiplayerDao;
 import main.dao.SingleplayerDao;
-import main.domain.Multiplayer;
+import main.domain.Singleplayer;
 import main.domain.User;
 
 public class PlayerMessage {
@@ -53,7 +53,8 @@ public class PlayerMessage {
         this.nickname = user.getNickname();
         this.email = user.getEmail();
         this.avatar = user.getAvatar();
-        this.score = singleplayerDao.
+        final Singleplayer singleplayer = singleplayerDao.getById(user.getId());
+        this.score = singleplayer.getScore().intValue();
     }
 
     public String getNickname() {

@@ -86,8 +86,7 @@ public class User {
 				Objects.equals(gamesNumber, user.gamesNumber);
 	}
 
-	@Override
-	public int hashCode() {
+	@Override	public int hashCode() {
 
 		return Objects.hash(id, nickname, email, password, avatar, gamesNumber);
 	}

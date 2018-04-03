@@ -2,7 +2,6 @@ package main.dao;
 
 import main.domain.User;
 import main.mapper.UserMapper;
-import main.models.UserMessage;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +19,9 @@ public class UserDaoSystem implements UserDao {
     }
 
     @Override
-    public void save(UserMessage user) {
+    public void save(User user) {
         final String sql = "INSERT INTO Users (nickname, email, password) VALUES (?,?,?)";
-        template.update(sql, user.getLogin(), user.getEmail(), user.getPassword());
+        template.update(sql, user.getNickname(), user.getEmail(), user.getPassword());
     }
 
     @Override
@@ -41,9 +40,9 @@ public class UserDaoSystem implements UserDao {
     }
 
     @Override
-    public void update(UserMessage user) {
+    public void update(User user) {
         final String sql = "UPDATE Users SET nickname=?, email=?, password=? WHERE id=?";
-        template.update(sql, user.getLogin(), user.getEmail(), user.getPassword(), user.getId());
+        template.update(sql, user.getNickname(), user.getEmail(), user.getPassword(), user.getId());
     }
 
     @Override

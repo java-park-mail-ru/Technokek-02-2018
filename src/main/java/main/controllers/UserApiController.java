@@ -1,7 +1,7 @@
 package main.controllers;
 
+import main.domain.User;
 import main.models.Message;
-import main.models.User;
 import main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,11 +36,6 @@ public class UserApiController {
     @PostMapping(value = "/register", produces = "application/json")
     public Message register(@RequestBody User newbie) {
         return userService.registUser(newbie);
-    }
-
-    @GetMapping(value = "/{unknown}", produces = "application/json")
-    public Message fail(@PathVariable("unknown") String unknown) {
-        return UserService.notFound(unknown);
     }
 
     @PostMapping(value = "/login", produces = "application/json")

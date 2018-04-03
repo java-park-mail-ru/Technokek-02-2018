@@ -1,19 +1,23 @@
 package main.service;
 
 import main.dao.UserDao;
+import main.domain.User;
 import main.models.Message;
-import main.models.User;
-import org.jetbrains.annotations.Nullable;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Validation {
 
-    @Autowired
+
     private UserDao userDao;
 
-    public @Nullable
+    public Validation(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @Nullable
+    public
     Message checkId(Long id) {
         if (id == null) {
             return new Message<String>(false, "NOT_LOGINED");

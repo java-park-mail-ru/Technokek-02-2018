@@ -7,14 +7,9 @@ import main.domain.Multiplayer;
 import main.domain.Singleplayer;
 import main.domain.User;
 import main.models.Message;
-import main.models.Player;
 import main.models.PlayerMessage;
-import main.models.User;
-import main.models.UserMessage;
 import main.models.scoreboard.MultiplayerMessage;
-import main.models.scoreboard.SinglePlayer;
 import main.models.scoreboard.SingleplayerMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -37,7 +32,7 @@ public class UserService {
         }
 
 
-        public Message registUser(UserMessage newbie) {
+        public Message registUser(User newbie) {
             final List<User> allUsers = userDao.findAll();
             for (User user : allUsers) {
                 if (user.getEmail().equals(newbie.getEmail())) {
@@ -49,7 +44,7 @@ public class UserService {
             return new Message<String>(true, "USER_SUCCESSFULLY_REGISTERED");
         }
 
-        public Message login(UserMessage checkUser, HttpSession session) {
+        public Message login(User checkUser, HttpSession session) {
 
             final List<User> userList = userDao.findAll();
             for (User cur : userList) {
@@ -159,7 +154,7 @@ public class UserService {
             if (curUser == null) {
                 return new Message<String>(false, "INVALID_SESSION_ID");
             }
-            curUser.editUser(user.getEmail(), user.getLogin(), user.getPassword());
+            userDao.update(user);
             return new Message<String>(true, "USER_SUCCESSFULLY_CHANGED");
         }
 
