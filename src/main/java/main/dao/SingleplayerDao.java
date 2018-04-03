@@ -1,7 +1,8 @@
 package main.dao;
 
-import java.util.List;
 import main.domain.Singleplayer;
+
+import java.util.List;
 
 public interface SingleplayerDao {
 

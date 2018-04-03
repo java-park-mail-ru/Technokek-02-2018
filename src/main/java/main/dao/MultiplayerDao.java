@@ -1,7 +1,8 @@
 package main.dao;
 
-import java.util.List;
 import main.domain.Multiplayer;
+
+import java.util.List;
 
 public interface MultiplayerDao {
 

@@ -1,7 +1,8 @@
 package main.dao;
 
-import java.util.List;
 import main.domain.User;
+
+import java.util.List;
 
 public interface UserDao {
 

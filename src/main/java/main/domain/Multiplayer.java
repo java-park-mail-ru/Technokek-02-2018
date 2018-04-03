@@ -10,11 +10,11 @@ public class Multiplayer {
     @Column(name = "game_id")
     private Long id;
 
-    @OneToOne(mappedBy = "user")
+
     @Column(name = "user_first_id")
     private Long userFirstId;
 
-    @OneToOne(mappedBy = "user")
+
     @Column(name = "user_second_id")
     private Long userSecondId;
 

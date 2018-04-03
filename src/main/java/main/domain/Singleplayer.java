@@ -10,7 +10,7 @@ public class Singleplayer {
 	@Column(name = "game_id")
 	private Long id;
 
-	@OneToOne(mappedBy = "user")
+
 	@Column(name = "user_id")
 	private Long userId;
 
