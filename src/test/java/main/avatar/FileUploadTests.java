@@ -44,21 +44,21 @@ public class FileUploadTests {
     @Test
     public void shouldListAllFiles() throws Exception {
         given(this.storageService.getAllAvatars())
-                .willReturn(Stream.of(Paths.get("first.txt"), Paths.get("second.txt")));
+                .willReturn(Stream.of(Paths.get("first.png"), Paths.get("second.png")));
 
         this.mvc.perform(get("/")).andExpect(status().isOk())
                 .andExpect(model().attribute("files",
-                        Matchers.contains("http://localhost/files/first.txt",
-                                "http://localhost/files/second.txt")));
+                        Matchers.contains("http://localhost:8080/avatars/second.png",
+                                "http://localhost:8080/avatars/second.png")));
     }
 
     @Test
     public void shouldSaveUploadedFile() throws Exception {
-        final MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
+        final MockMultipartFile multipartFile = new MockMultipartFile("file", "test.png",
                 "text/plain", "Spring Framework".getBytes());
-        this.mvc.perform(fileUpload("/").file(multipartFile))
+        this.mvc.perform(fileUpload("/upload/avatar").file(multipartFile))
                 .andExpect(status().isFound())
-                .andExpect(header().string("Location", "/"));
+                .andExpect(header().string("Location", "/upload/avatar"));
 
         then(this.storageService).should().saveAvatar(multipartFile,testUser);
     }
@@ -66,10 +66,10 @@ public class FileUploadTests {
     @SuppressWarnings("unchecked")
     @Test
     public void should404WhenMissingFile() throws Exception {
-        given(this.storageService.loadAvatarResource("test.txt"))
+        given(this.storageService.loadAvatarResource("test.png"))
                 .willThrow(AvatarGeneralException.class);
 
-        this.mvc.perform(get("/avatars/test.txt")).andExpect(status().isNotFound());
+        this.mvc.perform(get("/avatars/test.png")).andExpect(status().isNotFound());
     }
 
 }
