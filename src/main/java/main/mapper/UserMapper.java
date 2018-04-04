@@ -9,7 +9,10 @@ public class UserMapper {
         String nickname = res.getString("nickname");
         String email = res.getString("email");
         String password = res.getString("password");
+        Integer score = res.getInt("score");
+        Integer gamesNumber = res.getInt("games_number");
+        String avatar = res.getString("avatar");
 
-        return new User(id, nickname, email, password, null, 0);
+        return new User(id, nickname, email, password, avatar, score, gamesNumber);
     };
 }

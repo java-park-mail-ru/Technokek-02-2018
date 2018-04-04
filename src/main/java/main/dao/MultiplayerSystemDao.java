@@ -23,7 +23,7 @@ public class MultiplayerSystemDao implements MultiplayerDao {
     @Override
     public void save(Long userFirstId, Long userSecond, Long score) {
         try {
-            final String sql = "INSERT INTO Multiplayer (score, user_first_id, user_second_id) VALUES (?,?,?)";
+            final String sql = "INSERT INTO multiplayer (score, user_first_id, user_second_id) VALUES (?,?,?)";
             template.update(sql, score, userFirstId, userSecond);
         } catch (DataAccessException e) {
             e.printStackTrace();
@@ -32,7 +32,7 @@ public class MultiplayerSystemDao implements MultiplayerDao {
 
     @Override
     public Multiplayer getById(Long id) {
-        final String sql = "SELECT * FROM Multiplayer WHERE game_id = ?";
+        final String sql = "SELECT * FROM multiplayer WHERE game_id = ?";
         final List<Multiplayer> result = template.query(sql, ps -> ps.setLong(1, id), MultiplayerMapper.MULTIPLAYER_MAPPER);
         if (result.isEmpty()) {
             return null;

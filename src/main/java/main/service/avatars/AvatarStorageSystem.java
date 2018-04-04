@@ -40,7 +40,7 @@ public class AvatarStorageSystem implements AvatarStorageService {
                         "Cannot store file with relative path outside current directory "
                                 + filename);
             }
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
+            Files.copy(file.getInputStream(), this.rootLocation.resolve( curUser.getId() + filename),
                     StandardCopyOption.REPLACE_EXISTING);
             curUser.setAvatar(filename);
         } catch (IOException e) {

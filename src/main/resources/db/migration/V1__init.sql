@@ -4,7 +4,8 @@ CREATE TABLE users (
   email    VARCHAR(255),
   password VARCHAR(255),
   avatar VARCHAR(255),
-  games_number INTEGER
+  games_number INTEGER,
+  score INTEGER
 );
 
 CREATE TABLE singleplayer (

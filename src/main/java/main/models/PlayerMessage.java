@@ -8,8 +8,6 @@ import main.domain.User;
 
 public class PlayerMessage {
 
-    private SingleplayerDao singleplayerDao;
-    private MultiplayerDao multiplayerDao;
 
     private Long id;
 
@@ -28,9 +26,7 @@ public class PlayerMessage {
     @JsonProperty(value = "avatar")
     private String avatar;
 
-    public PlayerMessage(SingleplayerDao singleplayerDao, MultiplayerDao multiplayerDao, Long id, String nickname, int score, String email, int gamesNumber, String avatar) {
-        this.singleplayerDao = singleplayerDao;
-        this.multiplayerDao = multiplayerDao;
+    public PlayerMessage(Long id, String nickname, int score, String email, int gamesNumber, String avatar) {
         this.id = id;
         this.nickname = nickname;
         this.score = score;
@@ -39,14 +35,13 @@ public class PlayerMessage {
         this.avatar = avatar;
     }
 
-
     public PlayerMessage(User user) {
         this.id = user.getId();
         this.nickname = user.getNickname();
         this.email = user.getEmail();
         this.avatar = user.getAvatar();
-        final Singleplayer singleplayer = singleplayerDao.getById(user.getId());
-        this.score = singleplayer.getScore().intValue();
+        this.score = user.getScore();
+        this.gamesNumber = user.getGamesNumber();
     }
 
     public String getNickname() {
@@ -83,22 +78,6 @@ public class PlayerMessage {
 
     public int getGamesNumber() {
         return gamesNumber;
-    }
-
-    public SingleplayerDao getSingleplayerDao() {
-        return singleplayerDao;
-    }
-
-    public void setSingleplayerDao(SingleplayerDao singleplayerDao) {
-        this.singleplayerDao = singleplayerDao;
-    }
-
-    public MultiplayerDao getMultiplayerDao() {
-        return multiplayerDao;
-    }
-
-    public void setMultiplayerDao(MultiplayerDao multiplayerDao) {
-        this.multiplayerDao = multiplayerDao;
     }
 
     public void setId(Long id) {

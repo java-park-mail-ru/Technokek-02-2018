@@ -20,11 +20,11 @@ public class UserService {
 
 
     private UserDao userDao;
-    private SingleplayerDao singleplayerDao;
-    private MultiplayerDao multiplayerDao;
+    private SingleplayerSystemDao singleplayerDao;
+    private MultiplayerSystemDao multiplayerDao;
     private HistoryDaoSystem historyDaoSystem;
 
-    public UserService(UserDao userDao, SingleplayerDao singleplayerDao, MultiplayerDao multiplayerDao, HistoryDaoSystem historyDaoSystem) {
+    public UserService(UserDao userDao, SingleplayerSystemDao singleplayerDao, MultiplayerSystemDao multiplayerDao, HistoryDaoSystem historyDaoSystem) {
         this.userDao = userDao;
         this.singleplayerDao = singleplayerDao;
         this.multiplayerDao = multiplayerDao;
@@ -75,26 +75,32 @@ public class UserService {
 
             final List<Singleplayer> allGames = singleplayerDao.findAll();
 
+
+
             if (myId == null || singleplayerDao.getById(myId) == null ) {
                 final List<SingleplayerMessage> gameMessages =  new ArrayList<>();
                 for (Singleplayer game : allGames) {
-                    gameMessages.add(new SingleplayerMessage(game));
+                    gameMessages.add(new SingleplayerMessage(userDao, game));
                 }
+
 
                 scoreboard.put("me", null);
                 scoreboard.put("anoyher", gameMessages);
-                return new Message<HashMap>(true, scoreboard);
+
+                System.out.println(gameMessages);
+
+                return new Message<>(true, gameMessages);
             }
 
             final List<SingleplayerMessage> another = new ArrayList<>();
             final Singleplayer curUserGame = singleplayerDao.getById(myId);
             for (Singleplayer game : allGames) {
                 if (!game.equals(curUserGame)) {
-                    another.add(new SingleplayerMessage(game));
+                    another.add(new SingleplayerMessage(userDao, game));
                 }
             }
             final List<SingleplayerMessage> me = new ArrayList<>();
-            me.add(new SingleplayerMessage(curUserGame));
+            me.add(new SingleplayerMessage(userDao, curUserGame));
             scoreboard.put("me", me);
             scoreboard.put("another", another);
             return new Message<HashMap>(true, scoreboard);
@@ -111,7 +117,7 @@ public class UserService {
             if (myId == null || multiplayerDao.getById(myId) == null ) {
                 final List<MultiplayerMessage> gameMessages =  new ArrayList<>();
                 for (Multiplayer game : allGames) {
-                    gameMessages.add(new MultiplayerMessage(game));
+                    gameMessages.add(new MultiplayerMessage(userDao,game));
                 }
 
                 scoreboard.put("me", null);
@@ -123,11 +129,11 @@ public class UserService {
             final Multiplayer curUserGame = multiplayerDao.getById(myId);
             for (Multiplayer game : allGames) {
                 if (!game.equals(curUserGame)) {
-                    another.add(new MultiplayerMessage(game));
+                    another.add(new MultiplayerMessage(userDao, game));
                 }
             }
             final List<MultiplayerMessage> me = new ArrayList<>();
-            me.add(new MultiplayerMessage(curUserGame));
+            me.add(new MultiplayerMessage(userDao, curUserGame));
             scoreboard.put("me", me);
             scoreboard.put("another", another);
             return new Message<HashMap>(true, scoreboard);
@@ -146,7 +152,7 @@ public class UserService {
             final List<HistorySingleplayer> historyDb = historyDaoSystem.getUserHistorySingleplayer(myId);
             final List<HistorySingleplayerMessage> history = new ArrayList<>();
             for (HistorySingleplayer game : historyDb) {
-                history.add(new HistorySingleplayerMessage(game));
+                history.add(new HistorySingleplayerMessage(singleplayerDao, game));
             }
             return new Message<List>(true, history);
         }
@@ -164,18 +170,18 @@ public class UserService {
             final List<HistoryMultiplayer> historyDb = historyDaoSystem.getUserHistoryMultiplayer(myId);
             final List<HistoryMultiplayerMessage> history = new ArrayList<>();
             for (HistoryMultiplayer game : historyDb) {
-                history.add(new HistoryMultiplayerMessage(game));
+                history.add(new HistoryMultiplayerMessage(userDao,multiplayerDao,game));
             }
             return new Message<List>(true, history);
         }
 
         public Message getPlayer(Long id) {
             if (id == null) {
-                return new Message<String>(false, "NOT_LOGINED");
+                return new Message<String>(false, "USER_NOT_EXIST");
             }
             final User curUser = userDao.getById(id);
             if (curUser == null) {
-                return new Message<String>(false, "INVALID_SESSION_ID");
+                return new Message<String>(false, "USER_NOT_EXIST");
             }
             return new Message<PlayerMessage>(true, new PlayerMessage(curUser));
         }

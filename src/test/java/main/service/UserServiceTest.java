@@ -31,7 +31,7 @@ public class UserServiceTest {
 
     @Test
     public void registUser() {
-        final User newUser = new User( (long) 9,"dsf", "login", "password", null, null);
+        final User newUser = new User( (long) 9,"dsf", "login", "password", null, 0, 0);
         assertEquals(userService.registUser(newUser), new Message<String>(true, "USER_SUCCESSFULLY_REGISTERED"));
         assertEquals(userService.registUser(newUser), new Message<String>(false, "USER_ALREADY_EXISTS"));
     }

@@ -12,18 +12,22 @@ public class User {
 	private String email;
 	private String password;
 	private String avatar;
+	private Integer score;
 
-	public User(Long id, String nickname, String email, String password, String avatar, Integer gamesNumber) {
+	@Column(name = "games_number")
+	private Integer gamesNumber;
+
+	public User(Long id, String nickname, String email, String password, String avatar, Integer score, Integer gamesNumber) {
 		this.id = id;
 		this.nickname = nickname;
 		this.email = email;
 		this.password = password;
 		this.avatar = avatar;
+		this.score = score;
 		this.gamesNumber = gamesNumber;
 	}
 
-	@Column(name = "games_number")
-	private Integer gamesNumber;
+
 
 	public Long getId() {
 		return id;
@@ -73,6 +77,14 @@ public class User {
 		this.gamesNumber = gamesNumber;
 	}
 
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -83,12 +95,13 @@ public class User {
 				Objects.equals(email, user.email) &&
 				Objects.equals(password, user.password) &&
 				Objects.equals(avatar, user.avatar) &&
+				Objects.equals(score, user.score) &&
 				Objects.equals(gamesNumber, user.gamesNumber);
 	}
 
-	@Override	public int hashCode() {
+	@Override
+	public int hashCode() {
 
-		return Objects.hash(id, nickname, email, password, avatar, gamesNumber);
+		return Objects.hash(id, nickname, email, password, avatar, score, gamesNumber);
 	}
-
 }

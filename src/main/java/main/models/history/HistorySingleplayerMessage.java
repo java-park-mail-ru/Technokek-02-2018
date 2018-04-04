@@ -1,27 +1,32 @@
 package main.models.history;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import main.dao.SingleplayerDao;
 import main.dao.SingleplayerSystemDao;
 import main.domain.HistorySingleplayer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+@Service
 public class HistorySingleplayerMessage {
 
-    private SingleplayerSystemDao singleplayerDao;
+    @JsonIgnore
+    private final SingleplayerSystemDao singleplayerDao;
 
     private Date date;
     private Long score;
 
-    public HistorySingleplayerMessage(SingleplayerSystemDao singleplayerDao, Date date, Long score) {
+    @Autowired
+    public HistorySingleplayerMessage(SingleplayerSystemDao singleplayerDao) {
         this.singleplayerDao = singleplayerDao;
-        this.date = date;
-        this.score = score;
     }
 
-    public HistorySingleplayerMessage(HistorySingleplayer historySingleplayer) {
+    public HistorySingleplayerMessage(SingleplayerSystemDao singleplayerDao, HistorySingleplayer historySingleplayer) {
+        this.singleplayerDao = singleplayerDao;
         this.date = historySingleplayer.getDate();
-        this.score = singleplayerDao.getById(historySingleplayer.getGameId()).getScore();
+        this.score = this.singleplayerDao.getById(historySingleplayer.getGameId()).getScore();
     }
 
 

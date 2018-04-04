@@ -24,7 +24,7 @@ public class AvatarControllerService {
     public static ResponseEntity<Resource> dropAvatar(String avatar, AvatarStorageService avatarStorageService) {
         final Resource file = avatarStorageService.loadAvatarResource(avatar);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + '"').body(file);
+                "attachment; filename=\""  + file.getFilename() + '"').body(file);
     }
 
     public Message<String> setAvatar(MultipartFile file, AvatarStorageService avatarStorageService, HttpSession session) {
