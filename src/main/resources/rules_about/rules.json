@@ -1,0 +1,10 @@
+[
+  {
+    "type": "text",
+    "content": "Hello world"
+  },
+  {
+    "type": "img",
+    "content": "image_url.png"
+  }
+]
