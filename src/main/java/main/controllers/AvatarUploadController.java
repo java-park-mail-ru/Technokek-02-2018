@@ -4,7 +4,6 @@ import main.models.Message;
 import main.service.avatars.AvatarControllerService;
 import main.service.avatars.AvatarGeneralException;
 import main.service.avatars.AvatarStorageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

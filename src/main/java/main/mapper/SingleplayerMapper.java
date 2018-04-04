@@ -1,6 +1,5 @@
 package main.mapper;
 
-import main.domain.HistoryMultiplayer;
 import main.domain.HistorySingleplayer;
 import main.domain.Singleplayer;
 import org.springframework.jdbc.core.RowMapper;

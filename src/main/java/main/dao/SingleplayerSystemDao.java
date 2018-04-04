@@ -1,16 +1,12 @@
 package main.dao;
 
 import main.domain.Singleplayer;
-import main.domain.User;
 import main.mapper.SingleplayerMapper;
-import main.mapper.UserMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.PreparedStatement;
 import java.util.List;
 
 

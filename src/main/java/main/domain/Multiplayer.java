@@ -61,13 +61,20 @@ public class Multiplayer {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final Multiplayer game = (Multiplayer) o;
-        return Objects.equals(id, game.id) &&
-                Objects.equals(userFirstId, game.userFirstId) &&
-                Objects.equals(userSecondId, game.userSecondId) &&
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        final Multiplayer game = (Multiplayer) object;
+        return Objects.equals(id, game.id)
+                &&
+                Objects.equals(userFirstId, game.userFirstId)
+                &&
+                Objects.equals(userSecondId, game.userSecondId)
+                &&
                 Objects.equals(score, game.score);
     }
 

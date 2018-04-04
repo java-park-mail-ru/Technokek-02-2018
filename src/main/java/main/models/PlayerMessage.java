@@ -1,9 +1,6 @@
 package main.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import main.dao.MultiplayerDao;
-import main.dao.SingleplayerDao;
-import main.domain.Singleplayer;
 import main.domain.User;
 
 public class PlayerMessage {

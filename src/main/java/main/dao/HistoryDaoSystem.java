@@ -2,8 +2,6 @@ package main.dao;
 
 import main.domain.HistoryMultiplayer;
 import main.domain.HistorySingleplayer;
-import main.domain.Multiplayer;
-import main.domain.Singleplayer;
 import main.mapper.MultiplayerMapper;
 import main.mapper.SingleplayerMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

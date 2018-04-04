@@ -1,11 +1,15 @@
 package main.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
 @Table(name = "sigleplayer")
 public class Singleplayer {
+
 	@Id
 	@Column(name = "game_id")
 	private Long id;
@@ -47,12 +51,18 @@ public class Singleplayer {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		final Singleplayer game = (Singleplayer) o;
-		return Objects.equals(id, game.id) &&
-				Objects.equals(userId, game.userId) &&
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
+		final Singleplayer game = (Singleplayer) object;
+		return Objects.equals(id, game.id)
+				&&
+				Objects.equals(userId, game.userId)
+				&&
 				Objects.equals(score, game.score);
 	}
 
