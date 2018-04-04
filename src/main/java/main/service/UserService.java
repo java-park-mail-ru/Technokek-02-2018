@@ -65,7 +65,7 @@ public class UserService {
             if (curUser == null) {
                 return new Message<String>(false, "INVALID_SESSION_ID");
             }
-            return new Message<User>(true, curUser);
+            return new Message<PlayerMessage>(true, new PlayerMessage(curUser));
         }
 
         public Message getScoreBoardSingleplayer(HttpSession session, Long page) {

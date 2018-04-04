@@ -24,7 +24,7 @@ public class UserApiController {
     }
 
     @GetMapping(value = "/user/me", produces = "application/json")
-    public Message getUser(HttpSession session) {
+    public Message getMe(HttpSession session) {
         return userService.getUserData(session);
     }
 
