@@ -1,21 +1,18 @@
 package main.mapper;
 
-import main.models.User;
+import main.domain.User;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+public class UserMapper {
+    public static final RowMapper<User> USER_MAPPER = (res, num) -> {
+        Long id = res.getLong("id");
+        String nickname = res.getString("nickname");
+        String email = res.getString("email");
+        String password = res.getString("password");
+        Integer score = res.getInt("score");
+        Integer gamesNumber = res.getInt("games_number");
+        String avatar = res.getString("avatar");
 
-public class UserMapper implements RowMapper<User> {
-
-        @Override
-        public User mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-            final User user = new User();
-            user.setId(resultSet.getLong("id"));
-            user.setLogin(resultSet.getString("nickname"));
-            user.setEmail(resultSet.getString("email"));
-            user.setPassword(resultSet.getString("password"));
-            return user;
-        }
-
+        return new User(id, nickname, email, password, avatar, score, gamesNumber);
+    };
 }

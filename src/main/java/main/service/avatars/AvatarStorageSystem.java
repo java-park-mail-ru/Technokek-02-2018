@@ -1,6 +1,6 @@
 package main.service.avatars;
 
-import main.models.User;
+import main.domain.User;
 import main.properties.FileStorageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -24,7 +24,7 @@ public class AvatarStorageSystem implements AvatarStorageService {
 
     @Autowired
     public AvatarStorageSystem(FileStorageProperties properties) {
-        this.rootLocation = Paths.get(properties.getLocation() + "avatars/");
+        this.rootLocation = Paths.get(properties.getLocation() + "user_api_files/avatars/");
     }
 
     @Override
@@ -40,7 +40,7 @@ public class AvatarStorageSystem implements AvatarStorageService {
                         "Cannot store file with relative path outside current directory "
                                 + filename);
             }
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
+            Files.copy(file.getInputStream(), this.rootLocation.resolve( curUser.getId() + filename),
                     StandardCopyOption.REPLACE_EXISTING);
             curUser.setAvatar(filename);
         } catch (IOException e) {

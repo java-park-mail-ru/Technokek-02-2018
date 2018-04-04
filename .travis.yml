@@ -1,6 +1,5 @@
 language: java
 jdk:
-  - oraclejdk9
-
-branches:
-  - master
+ - oraclejdk9
+install:
+  mvn checkstyle:check

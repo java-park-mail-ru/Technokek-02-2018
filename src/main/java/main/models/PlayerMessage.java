@@ -1,8 +1,13 @@
 package main.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import main.dao.MultiplayerDao;
+import main.dao.SingleplayerDao;
+import main.domain.Singleplayer;
+import main.domain.User;
 
-public class Player {
+public class PlayerMessage {
+
 
     private Long id;
 
@@ -21,13 +26,22 @@ public class Player {
     @JsonProperty(value = "avatar")
     private String avatar;
 
-    public Player(User user) {
+    public PlayerMessage(Long id, String nickname, int score, String email, int gamesNumber, String avatar) {
+        this.id = id;
+        this.nickname = nickname;
+        this.score = score;
+        this.email = email;
+        this.gamesNumber = gamesNumber;
+        this.avatar = avatar;
+    }
+
+    public PlayerMessage(User user) {
         this.id = user.getId();
-        this.nickname = user.getLogin();
+        this.nickname = user.getNickname();
         this.email = user.getEmail();
         this.avatar = user.getAvatar();
-        this.score = 0;
-        this.gamesNumber = 0;
+        this.score = user.getScore();
+        this.gamesNumber = user.getGamesNumber();
     }
 
     public String getNickname() {
@@ -64,5 +78,17 @@ public class Player {
 
     public int getGamesNumber() {
         return gamesNumber;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setGamesNumber(int gamesNumber) {
+        this.gamesNumber = gamesNumber;
     }
 }

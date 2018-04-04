@@ -8,6 +8,9 @@ tomcat
 # Default excludes
 #
 
+# Images and other user files
+*.png
+
 # Binaries
 *.7z
 *.dmg

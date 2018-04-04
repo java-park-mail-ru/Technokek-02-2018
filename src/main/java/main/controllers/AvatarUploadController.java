@@ -19,7 +19,7 @@ public class AvatarUploadController {
     private final AvatarStorageService avatarStorageService;
     private final AvatarControllerService avatarControllerService;
 
-    @Autowired
+
     public AvatarUploadController(AvatarStorageService storageService, AvatarControllerService avatarControllerService) {
         this.avatarStorageService = storageService;
         this.avatarControllerService = avatarControllerService;
