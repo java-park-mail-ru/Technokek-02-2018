@@ -1,13 +1,11 @@
 package main.service;
 
-import main.dao.MultiplayerDao;
-import main.dao.SingleplayerDao;
-import main.dao.UserDao;
-import main.domain.Multiplayer;
-import main.domain.Singleplayer;
-import main.domain.User;
+import main.dao.*;
+import main.domain.*;
 import main.models.Message;
 import main.models.PlayerMessage;
+import main.models.history.HistoryMultiplayerMessage;
+import main.models.history.HistorySingleplayerMessage;
 import main.models.scoreboard.MultiplayerMessage;
 import main.models.scoreboard.SingleplayerMessage;
 import org.springframework.stereotype.Service;
@@ -21,18 +19,19 @@ import java.util.List;
 public class UserService {
 
 
-        private UserDao userDao;
-        private SingleplayerDao singleplayerDao;
-        private MultiplayerDao multiplayerDao;
+    private UserDao userDao;
+    private SingleplayerDao singleplayerDao;
+    private MultiplayerDao multiplayerDao;
+    private HistoryDaoSystem historyDaoSystem;
 
-        public UserService(UserDao userDao, SingleplayerDao singleplayerDao, MultiplayerDao multiplayerDao) {
-            this.userDao = userDao;
-            this.singleplayerDao = singleplayerDao;
-            this.multiplayerDao = multiplayerDao;
-        }
+    public UserService(UserDao userDao, SingleplayerDao singleplayerDao, MultiplayerDao multiplayerDao, HistoryDaoSystem historyDaoSystem) {
+        this.userDao = userDao;
+        this.singleplayerDao = singleplayerDao;
+        this.multiplayerDao = multiplayerDao;
+        this.historyDaoSystem = historyDaoSystem;
+    }
 
-
-        public Message registUser(User newbie) {
+    public Message registUser(User newbie) {
             final List<User> allUsers = userDao.findAll();
             for (User user : allUsers) {
                 if (user.getEmail().equals(newbie.getEmail())) {
@@ -132,6 +131,42 @@ public class UserService {
             scoreboard.put("me", me);
             scoreboard.put("another", another);
             return new Message<HashMap>(true, scoreboard);
+        }
+
+        public Message getHistorySingleplayer(HttpSession session, Long page) {
+            final Long myId = (Long) session.getAttribute("userId");
+            if (myId == null) {
+                return new Message<String>(false, "NOT_LOGINED");
+            }
+
+            final User curUser = userDao.getById(myId);
+            if (curUser == null) {
+                return new Message<String>(false, "INVALID_SESSION_ID");
+            }
+            final List<HistorySingleplayer> historyDb = historyDaoSystem.getUserHistorySingleplayer(myId);
+            final List<HistorySingleplayerMessage> history = new ArrayList<>();
+            for (HistorySingleplayer game : historyDb) {
+                history.add(new HistorySingleplayerMessage(game));
+            }
+            return new Message<List>(true, history);
+        }
+
+        public Message getHistoryMultiplayer(HttpSession session, Long page) {
+            final Long myId = (Long) session.getAttribute("userId");
+            if (myId == null) {
+                return new Message<String>(false, "NOT_LOGINED");
+            }
+
+            final User curUser = userDao.getById(myId);
+            if (curUser == null) {
+                return new Message<String>(false, "INVALID_SESSION_ID");
+            }
+            final List<HistoryMultiplayer> historyDb = historyDaoSystem.getUserHistoryMultiplayer(myId);
+            final List<HistoryMultiplayerMessage> history = new ArrayList<>();
+            for (HistoryMultiplayer game : historyDb) {
+                history.add(new HistoryMultiplayerMessage(game));
+            }
+            return new Message<List>(true, history);
         }
 
         public Message getPlayer(Long id) {

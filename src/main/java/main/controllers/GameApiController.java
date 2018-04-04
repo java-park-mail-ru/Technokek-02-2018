@@ -25,9 +25,19 @@ public class GameApiController {
         return userService.getScoreBoardSingleplayer(session, page);
     }
 
+    @GetMapping(value = "/history/singleplayer/{page}", produces = "application/json")
+    public Message getHistorySingle(@PathVariable("page") Long page, HttpSession session) {
+        return userService.getHistorySingleplayer(session, page);
+    }
+
     @GetMapping(value = "/scoreboard/multiplayer/{page}")
     public Message getScoreBoardMulti(@PathVariable("page") Long page, HttpSession session) {
         return userService.getScoreBoardMultiplayer(session, page);
+    }
+
+    @GetMapping(value = "/history/multiplayer/{page}", produces = "application/json")
+    public Message getHistoryMulti(@PathVariable("page") Long page, HttpSession session) {
+        return userService.getHistoryMultiplayer(session, page);
     }
 
     @GetMapping(value = "/about", produces = "application/json")
