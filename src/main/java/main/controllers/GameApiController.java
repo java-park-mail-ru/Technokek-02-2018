@@ -1,21 +1,27 @@
 package main.controllers;
-
 import main.models.Message;
 import main.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
+
+
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+
 
 @RestController
 public class GameApiController {
 
     private final UserService userService;
 
-    @Autowired
     public GameApiController(UserService userService) {
         this.userService = userService;
     }
@@ -41,13 +47,23 @@ public class GameApiController {
     }
 
     @GetMapping(value = "/about", produces = "application/json")
-    public Message getAboutInf() {
-        return UserService.about();
+    public Message getAboutInf() throws IOException, ParseException, FileNotFoundException {
+
+        final JSONParser parser = new JSONParser();
+        final Object object = parser.parse(new FileReader("src/main/resources/rules_about/about.json"));
+        final JSONArray jsonObject = (JSONArray) object;
+
+        return new Message<>(true, jsonObject);
     }
 
-    @GetMapping(value = "/getusers", produces = "application/json")
-    public Message<List> getUsersInf() {
-        return new Message<List>(true, userService.getUsersFromBD());
+    @GetMapping(value = "/rules", produces = "application/json")
+    public Message getRulesInf() throws IOException, ParseException, FileNotFoundException {
+
+        final JSONParser parser = new JSONParser();
+        final Object object = parser.parse(new FileReader("src/main/resources/rules_about/rules.json"));
+        final JSONArray jsonObject = (JSONArray) object;
+
+        return new Message<>(true, jsonObject);
     }
 
 }

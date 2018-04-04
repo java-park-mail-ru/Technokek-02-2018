@@ -24,7 +24,7 @@ public class AvatarStorageSystem implements AvatarStorageService {
 
     @Autowired
     public AvatarStorageSystem(FileStorageProperties properties) {
-        this.rootLocation = Paths.get(properties.getLocation() + "avatars/");
+        this.rootLocation = Paths.get(properties.getLocation() + "user_api_files/avatars/");
     }
 
     @Override

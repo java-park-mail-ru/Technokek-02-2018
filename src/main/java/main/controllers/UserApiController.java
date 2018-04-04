@@ -13,7 +13,6 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @Autowired
     public UserApiController(UserService userService) {
         this.userService = userService;
     }
@@ -33,7 +32,7 @@ public class UserApiController {
         return userService.getPlayer(id);
     }
 
-    @PostMapping(value = "/register", produces = "application/json")
+    @PostMapping(value = "/singup", produces = "application/json")
     public Message register(@RequestBody User newbie) {
         return userService.registUser(newbie);
     }
