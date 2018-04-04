@@ -1,7 +1,6 @@
 package main.models.history;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import main.dao.SingleplayerDao;
 import main.dao.SingleplayerSystemDao;
 import main.domain.HistorySingleplayer;
 import org.springframework.beans.factory.annotation.Autowired;

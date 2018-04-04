@@ -70,7 +70,8 @@ public class HistoryMultiplayer {
             return false;
         }
         final HistoryMultiplayer history = (HistoryMultiplayer) object;
-        return Objects.equals(id, history.id) &&
+        return Objects.equals(id, history.id)
+                &&
                 Objects.equals(userId, history.userId)
                 &&
                 Objects.equals(gameId, history.gameId)

@@ -33,60 +33,60 @@ public class User {
 
 
     public Long getId() {
-		return id;
-	}
+        return id;
+    }
 
     public void setId(Long id) {
-		this.id = id;
-	}
+        this.id = id;
+    }
 
     public String getNickname() {
-		return nickname;
-	}
+        return nickname;
+    }
 
     public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+        this.nickname = nickname;
+    }
 
     public String getEmail() {
-		return email;
-	}
+        return email;
+    }
 
     public void setEmail(String email) {
-		this.email = email;
-	}
+        this.email = email;
+    }
 
     public String getPassword() {
-		return password;
-	}
+        return password;
+    }
 
     public void setPassword(String password) {
-		this.password = password;
-	}
+        this.password = password;
+    }
 
     public String getAvatar() {
-		return avatar;
-	}
+        return avatar;
+    }
 
     public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
+        this.avatar = avatar;
+    }
 
     public Integer getGamesNumber() {
-		return gamesNumber;
-	}
+        return gamesNumber;
+    }
 
     public void setGamesNumber(Integer gamesNumber) {
-		this.gamesNumber = gamesNumber;
-	}
+        this.gamesNumber = gamesNumber;
+    }
 
     public Integer getScore() {
-		return score;
-	}
+        return score;
+    }
 
     public void setScore(Integer score) {
-		this.score = score;
-	}
+        this.score = score;
+    }
 
     @Override
     public boolean equals(Object object) {
@@ -110,11 +110,11 @@ public class User {
                 Objects.equals(score, user.score)
                 &&
                 Objects.equals(gamesNumber, user.gamesNumber);
-	}
+    }
 
-	@Override
-	public int hashCode() {
+    @Override
+    public int hashCode() {
 
-		return Objects.hash(id, nickname, email, password, avatar, score, gamesNumber);
-	}
+        return Objects.hash(id, nickname, email, password, avatar, score, gamesNumber);
+    }
 }
