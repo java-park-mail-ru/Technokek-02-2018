@@ -27,28 +27,28 @@ public class Singleplayer {
     }
 
     public Long getId() {
-		return id;
-	}
+        return id;
+    }
 
     public void setId(Long id) {
-		this.id = id;
-	}
+        this.id = id;
+    }
 
     public Long getUserId() {
-		return userId;
-	}
+        return userId;
+    }
 
     public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+        this.userId = userId;
+    }
 
     public Long getScore() {
-		return score;
-	}
+        return score;
+    }
 
     public void setScore(Long score) {
-		this.score = score;
-	}
+        this.score = score;
+    }
 
     @Override
     public boolean equals(Object object) {
