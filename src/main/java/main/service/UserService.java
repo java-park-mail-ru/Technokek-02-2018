@@ -31,7 +31,7 @@ public class UserService {
         this.historyDaoSystem = historyDaoSystem;
     }
 
-    public Message registUser(User newbie) {
+    public Message registUser(User newbie) throws Exception {
             final List<User> allUsers = userDao.findAll();
             for (User user : allUsers) {
                 if (user.getEmail().equals(newbie.getEmail())) {

@@ -33,7 +33,7 @@ public class UserApiController {
     }
 
     @PostMapping(value = "/singup", produces = "application/json")
-    public Message register(@RequestBody User newbie) {
+    public Message register(@RequestBody User newbie) throws Exception {
         return userService.registUser(newbie);
     }
 

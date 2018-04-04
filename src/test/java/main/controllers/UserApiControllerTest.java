@@ -1,62 +1,76 @@
 package main.controllers;
 
-import main.models.Message;
-import main.service.UserService;
-
+import main.Main;
+import com.github.javafaker.Faker;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrint;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
+import static org.hamcrest.core.Is.is;
+import java.util.Locale;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
-import javax.servlet.http.HttpSession;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = Main.class)
+@AutoConfigureMockMvc(print = MockMvcPrint.NONE)
+@Transactional
 public class UserApiControllerTest {
 
-    @Mock
-    private UserService userService;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @InjectMocks
-    UserApiController userApiController;
+    private static Faker faker;
+    private static String email;
+    private static String nickname;
+    private static String password;
 
+    @BeforeAll
+    public static void setUpFaker() {
+        faker = new Faker(new Locale("en-US"));
+    }
 
-    @Test
-    public void logout() {
-        final Message message = userApiController.logout(null);
-        verify(userService).loguot(null);
+    @BeforeAll
+    public static void setUpValues() {
+        email = faker.internet().emailAddress();
+        nickname = faker.name().username();
+        password = faker.internet().password();
+    }
+
+    public void singup() throws Exception {
+        mockMvc.perform(
+                post("/signup")
+                        .contentType("application/json")
+                        .content("{\"email\":\"" + email + "\"," +
+                                "\"nickname\":\"" + nickname + "\"," +
+                                "\"avatar\":\"" + null + "\"," +
+                                "\"score\":\"" + 0 + "\"," +
+                                "\"games_number\":\"" + 0 + "\"," +
+                                "\"password\":\"" + password + "\"}"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(status().isCreated());
     }
 
     @Test
-    public void getMe() {
-        final Message message = userApiController.getMe(null);
-        verify(userService).getUserData(null);
+    public void signInOk() throws Exception {
+        mockMvc.perform(
+                post("/login")
+                        .contentType("application/json")
+                        .content("{\"email\":\"" + email + "\"," +
+                                "\"password\":\"" + password + "\"}"))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(status().isCreated());
     }
 
-    @Test
-    public void getUser() {
-        final Long testId = 1L;
-        final Message message = userApiController.getUser(testId);
-        verify(userService).getPlayer(testId);
-    }
 
-    @Test
-    public void register() {
-        final Message message = userApiController.register(null);
-        verify(userService).registUser(null);
-    }
-
-    @Test
-    public void authorize() {
-        final Message message = userApiController.authorize(null, null);
-        verify(userService).login(null, null);
-    }
-
-    @Test
-    public void editProfile() {
-        final Message message = userApiController.editProfile(null, null);
-        verify(userService).editUser(null, null);
-    }
 }

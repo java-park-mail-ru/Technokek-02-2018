@@ -2,6 +2,7 @@ package main.dao;
 
 import main.domain.User;
 import main.mapper.UserMapper;
+import org.hibernate.JDBCException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ public class UserDaoSystem implements UserDao {
     }
 
     @Override
-    public void save(User user) {
+    public void save(User user) throws JDBCException {
         final String sql = "INSERT INTO Users (nickname, email, password) VALUES (?,?,?)";
         template.update(sql, user.getNickname(), user.getEmail(), user.getPassword());
     }
