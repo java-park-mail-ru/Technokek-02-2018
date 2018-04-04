@@ -58,7 +58,7 @@ public class UserApiControllerTest {
                                 "\"games_number\":\"" + 0 + "\"," +
                                 "\"password\":\"" + password + "\"}"))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(status().isCreated());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class UserApiControllerTest {
                         .content("{\"email\":\"" + email + "\"," +
                                 "\"password\":\"" + password + "\"}"))
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(status().isCreated());
+                .andExpect(status().isOk());
     }
 
 
