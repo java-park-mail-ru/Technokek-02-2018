@@ -24,7 +24,8 @@ public class UserService {
     private MultiplayerSystemDao multiplayerDao;
     private HistoryDaoSystem historyDaoSystem;
 
-    public UserService(UserDao userDao, SingleplayerSystemDao singleplayerDao, MultiplayerSystemDao multiplayerDao, HistoryDaoSystem historyDaoSystem) {
+    public UserService(UserDao userDao, SingleplayerSystemDao singleplayerDao,
+                       MultiplayerSystemDao multiplayerDao, HistoryDaoSystem historyDaoSystem) {
         this.userDao = userDao;
         this.singleplayerDao = singleplayerDao;
         this.multiplayerDao = multiplayerDao;
@@ -77,7 +78,7 @@ public class UserService {
 
 
 
-            if (myId == null || singleplayerDao.getById(myId) == null ) {
+            if (myId == null || singleplayerDao.getById(myId) == null) {
                 final List<SingleplayerMessage> gameMessages =  new ArrayList<>();
                 for (Singleplayer game : allGames) {
                     gameMessages.add(new SingleplayerMessage(userDao, game));
@@ -114,10 +115,10 @@ public class UserService {
 
             final List<Multiplayer> allGames = multiplayerDao.findAll();
 
-            if (myId == null || multiplayerDao.getById(myId) == null ) {
+            if (myId == null || multiplayerDao.getById(myId) == null) {
                 final List<MultiplayerMessage> gameMessages =  new ArrayList<>();
                 for (Multiplayer game : allGames) {
-                    gameMessages.add(new MultiplayerMessage(userDao,game));
+                    gameMessages.add(new MultiplayerMessage(userDao, game));
                 }
 
                 scoreboard.put("me", null);
@@ -170,7 +171,7 @@ public class UserService {
             final List<HistoryMultiplayer> historyDb = historyDaoSystem.getUserHistoryMultiplayer(myId);
             final List<HistoryMultiplayerMessage> history = new ArrayList<>();
             for (HistoryMultiplayer game : historyDb) {
-                history.add(new HistoryMultiplayerMessage(userDao,multiplayerDao,game));
+                history.add(new HistoryMultiplayerMessage(userDao, multiplayerDao, game));
             }
             return new Message<List>(true, history);
         }

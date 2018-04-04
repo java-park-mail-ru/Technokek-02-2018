@@ -3,7 +3,7 @@ package main.controllers;
 import main.domain.User;
 import main.models.Message;
 import main.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;

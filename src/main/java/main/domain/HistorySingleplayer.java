@@ -61,13 +61,20 @@ public class HistorySingleplayer {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final HistorySingleplayer history = (HistorySingleplayer) o;
-        return Objects.equals(id, history.id) &&
-                Objects.equals(userId, history.userId) &&
-                Objects.equals(gameId, history.gameId) &&
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        final HistorySingleplayer history = (HistorySingleplayer) object;
+        return Objects.equals(id, history.id)
+                &&
+                Objects.equals(userId, history.userId)
+                &&
+                Objects.equals(gameId, history.gameId)
+                &&
                 Objects.equals(date, history.date);
     }
 

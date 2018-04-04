@@ -62,13 +62,19 @@ public class HistoryMultiplayer {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final HistoryMultiplayer history = (HistoryMultiplayer) o;
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        final HistoryMultiplayer history = (HistoryMultiplayer) object;
         return Objects.equals(id, history.id) &&
-                Objects.equals(userId, history.userId) &&
-                Objects.equals(gameId, history.gameId) &&
+                Objects.equals(userId, history.userId)
+                &&
+                Objects.equals(gameId, history.gameId)
+                &&
                 Objects.equals(date, history.date);
     }
 
