@@ -94,7 +94,7 @@ public class UserService {
 
 
                 scoreboard.put("me", null);
-                scoreboard.put("anoyher", singplayMes.paginate(page, gameMessages));
+                scoreboard.put("another", singplayMes.paginate(page, gameMessages));
 
                 System.out.println(gameMessages);
 
@@ -130,7 +130,7 @@ public class UserService {
                 }
 
                 scoreboard.put("me", null);
-                scoreboard.put("anoyher", multMes.paginate(page, gameMessages));
+                scoreboard.put("another", multMes.paginate(page, gameMessages));
                 return new Message<HashMap>(true, scoreboard);
             }
 
