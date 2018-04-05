@@ -42,7 +42,7 @@ public class UserApiController {
         return userService.login(user, session);
     }
 
-    @PostMapping(value = "/edit", produces = "application/json")
+    @PostMapping(value = "/user/edit", produces = "application/json")
     public Message editProfile(@RequestBody User user, HttpSession session) {
         return userService.editUser(user, session);
     }

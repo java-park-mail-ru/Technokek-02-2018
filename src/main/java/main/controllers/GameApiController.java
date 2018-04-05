@@ -37,7 +37,7 @@ public class GameApiController {
         return userService.getHistorySingleplayer(session, page);
     }
 
-    @GetMapping(value = "/scoreboard/multiplayer/{page}")
+    @GetMapping(value = "/scoreboard/multiplayer/{page}", produces = "application/json")
     public Message getScoreBoardMulti(@PathVariable("page") Integer page, HttpSession session) {
         return userService.getScoreBoardMultiplayer(session, page);
     }

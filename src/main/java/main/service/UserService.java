@@ -226,7 +226,16 @@ public class UserService {
             errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
             return new Message<>(false, errorStackMessages);
         }
-        userDao.update(user);
+        if (user.getEmail() != null) {
+            curUser.setEmail(user.getEmail());
+        }
+        if (user.getNickname() != null) {
+            curUser.setNickname(user.getNickname());
+        }
+        if (user.getPassword() != null) {
+            curUser.setPassword(user.getPassword());
+        }
+        userDao.update(curUser);
         return getUserData(session);
     }
 
