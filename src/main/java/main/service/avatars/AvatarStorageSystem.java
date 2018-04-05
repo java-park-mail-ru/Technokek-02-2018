@@ -29,7 +29,7 @@ public class AvatarStorageSystem implements AvatarStorageService {
 
     @Override
     public void saveAvatar(MultipartFile file, User curUser) {
-        final String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        final String filename = StringUtils.cleanPath(curUser.getId() + file.getOriginalFilename());
         try {
             if (file.isEmpty()) {
                 throw new AvatarGeneralException("Failed to store empty file " + filename);
@@ -40,7 +40,7 @@ public class AvatarStorageSystem implements AvatarStorageService {
                         "Cannot store file with relative path outside current directory "
                                 + filename);
             }
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(curUser.getId() + filename),
+            Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
                     StandardCopyOption.REPLACE_EXISTING);
             curUser.setAvatar(filename);
         } catch (IOException e) {
