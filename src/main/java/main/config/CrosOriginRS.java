@@ -18,17 +18,10 @@ public class CrosOriginRS {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("https://teckokek-front.herokuapp.com/")
+                registry.addMapping("/**").allowedOrigins("https://teckokek-front.herokuapp.com")
                         .allowCredentials(true)
                         .allowedMethods("GET", "POST");
             }
-        };
-    }
-
-    @Bean
-    CommandLineRunner init(AvatarStorageService storageService) {
-        return (args) -> {
-            storageService.init();
         };
     }
 }

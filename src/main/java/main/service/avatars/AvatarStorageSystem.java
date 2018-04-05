@@ -3,12 +3,15 @@ package main.service.avatars;
 import main.domain.User;
 import main.properties.FileStorageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -26,6 +29,7 @@ public class AvatarStorageSystem implements AvatarStorageService {
     public AvatarStorageSystem(FileStorageProperties properties) {
         this.rootLocation = Paths.get(properties.getLocation() + "user_api_files/avatars/");
     }
+
 
     @Override
     public void saveAvatar(MultipartFile file, User curUser) {
@@ -83,6 +87,7 @@ public class AvatarStorageSystem implements AvatarStorageService {
     }
 
     @Override
+    @PostConstruct
     public void init() {
         try {
             Files.createDirectories(rootLocation);
