@@ -48,7 +48,7 @@ public class UserService {
             for (User user : allUsers) {
                 if (user.getEmail().equals(newbie.getEmail())) {
                     ErrorStackMessages errorStackMessages = new ErrorStackMessages();
-                    errorStackMessages.addFieldError("email", ErrorTypes.errorsMap.get(ErrorTypes.userAlreadyExists));
+                    errorStackMessages.addFieldError("email", ErrorTypes.getErrorsMap().get(ErrorTypes.getUserAlreadyExists()));
                     return new Message<>(false, errorStackMessages);
                 }
             }
@@ -67,7 +67,7 @@ public class UserService {
             }
         }
         ErrorStackMessages errorStackMessages = new ErrorStackMessages();
-        errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.incorrectEmailOrPassword));
+        errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getIncorrectEmailOrPassword()));
         return new Message<>(false, errorStackMessages);
     }
 
@@ -75,13 +75,13 @@ public class UserService {
         final Long id = (Long) session.getAttribute("userId");
         ErrorStackMessages errorStackMessages = new ErrorStackMessages();
         if (id == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
             return new Message<>(false, errorStackMessages);
         }
 
         final User curUser = userDao.getById(id);
         if (curUser == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
             return new Message<>(false, errorStackMessages);
         }
         return new Message<>(true, new PlayerMessage(curUser));
@@ -162,13 +162,13 @@ public class UserService {
         final Long myId = (Long) session.getAttribute("userId");
         ErrorStackMessages errorStackMessages = new ErrorStackMessages();
         if (myId == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
             return new Message<>(false, errorStackMessages);
         }
 
         final User curUser = userDao.getById(myId);
         if (curUser == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
             return new Message<>(false, errorStackMessages);
         }
         final List<HistorySingleplayer> historyDb = historyDaoSystem.getUserHistorySingleplayer(myId);
@@ -183,13 +183,13 @@ public class UserService {
         final Long myId = (Long) session.getAttribute("userId");
         ErrorStackMessages errorStackMessages = new ErrorStackMessages();
         if (myId == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
             return new Message<>(false, errorStackMessages);
         }
 
         final User curUser = userDao.getById(myId);
         if (curUser == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
             return new Message<>(false, errorStackMessages);
         }
         final List<HistoryMultiplayer> historyDb = historyDaoSystem.getUserHistoryMultiplayer(myId);
@@ -203,12 +203,12 @@ public class UserService {
     public Message getPlayer(Long id) {
         ErrorStackMessages errorStackMessages = new ErrorStackMessages();
         if (id == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notFound));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotFound()));
             return new Message<>(false, errorStackMessages);
         }
         final User curUser = userDao.getById(id);
         if (curUser == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notFound));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotFound()));
             return new Message<>(false, errorStackMessages);
         }
         return new Message<PlayerMessage>(true, new PlayerMessage(curUser));
@@ -218,12 +218,12 @@ public class UserService {
         final Long id = (Long) session.getAttribute("userId");
         ErrorStackMessages errorStackMessages = new ErrorStackMessages();
         if (id == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
             return new Message<>(false, errorStackMessages);
         }
         final User curUser = userDao.getById(id);
         if (curUser == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
             return new Message<>(false, errorStackMessages);
         }
         userDao.update(user);
@@ -234,12 +234,12 @@ public class UserService {
         ErrorStackMessages errorStackMessages = new ErrorStackMessages();
         final Long id = (Long) session.getAttribute("userId");
         if (id == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
             return new Message<>(false, errorStackMessages);
         }
         final User curUser = userDao.getById(id);
         if (curUser == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
+            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
             return new Message<>(false, errorStackMessages);
         }
         session.invalidate();

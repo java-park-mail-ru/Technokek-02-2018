@@ -4,19 +4,19 @@ import java.util.HashMap;
 
 public class ErrorTypes {
 
-    public static Integer notFound = 404;
-    public static Integer notAuthorized = 401;
-    public static Integer requiredField = 1001;
-    public static Integer userAlreadyExists = 1011;
-    public static Integer incorrectEmail = 1012;
-    public static Integer nicknameTaken = 1013;
-    public static Integer shortPassword = 1014;
-    public static Integer incorrectRegData = 1015;
-    public static Integer incorrectPassword = 1016;
-    public static Integer incorrectEmailOrPassword = 1021;
-    public static Integer incorrectLogoutFailed = 1031;
+    private static Integer notFound = 404;
+    private static Integer notAuthorized = 401;
+    private static Integer requiredField = 1001;
+    private static Integer userAlreadyExists = 1011;
+    private static Integer incorrectEmail = 1012;
+    private static Integer nicknameTaken = 1013;
+    private static Integer shortPassword = 1014;
+    private static Integer incorrectRegData = 1015;
+    private static Integer incorrectPassword = 1016;
+    private static Integer incorrectEmailOrPassword = 1021;
+    private static Integer incorrectLogoutFailed = 1031;
 
-    public static HashMap<Integer, ErrorMessage> errorsMap;
+    private static HashMap<Integer, ErrorMessage> errorsMap;
 
     static {
         errorsMap = new HashMap<>();
@@ -31,5 +31,53 @@ public class ErrorTypes {
         errorsMap.put(incorrectPassword, new ErrorMessage(incorrectPassword, "Incorrect password"));
         errorsMap.put(incorrectEmailOrPassword, new ErrorMessage(incorrectEmailOrPassword, "Incorrect email or password"));
         errorsMap.put(incorrectLogoutFailed, new ErrorMessage(incorrectLogoutFailed, "Logout failed"));
+    }
+
+    public static Integer getNotFound() {
+        return notFound;
+    }
+
+    public static Integer getNotAuthorized() {
+        return notAuthorized;
+    }
+
+    public static Integer getRequiredField() {
+        return requiredField;
+    }
+
+    public static Integer getUserAlreadyExists() {
+        return userAlreadyExists;
+    }
+
+    public static Integer getIncorrectEmail() {
+        return incorrectEmail;
+    }
+
+    public static Integer getNicknameTaken() {
+        return nicknameTaken;
+    }
+
+    public static Integer getShortPassword() {
+        return shortPassword;
+    }
+
+    public static Integer getIncorrectRegData() {
+        return incorrectRegData;
+    }
+
+    public static Integer getIncorrectPassword() {
+        return incorrectPassword;
+    }
+
+    public static Integer getIncorrectEmailOrPassword() {
+        return incorrectEmailOrPassword;
+    }
+
+    public static Integer getIncorrectLogoutFailed() {
+        return incorrectLogoutFailed;
+    }
+
+    public static HashMap<Integer, ErrorMessage> getErrorsMap() {
+        return errorsMap;
     }
 }

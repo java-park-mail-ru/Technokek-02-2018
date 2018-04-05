@@ -43,7 +43,7 @@ public class UserServiceTest {
         final User newUser = new User( (long) 9,"dsf", "login", "password", null, 0, 0);
 
         ErrorStackMessages errorStackMessages = new ErrorStackMessages();
-        errorStackMessages.addFieldError("email", ErrorTypes.errorsMap.get(ErrorTypes.userAlreadyExists));
+        errorStackMessages.addFieldError("email", ErrorTypes.getErrorsMap().get(ErrorTypes.getUserAlreadyExists()));
 
         assertEquals(userService.registUser(newUser, httpSession), new Message<>(true, new PlayerMessage(newUser)));
         assertEquals(userService.registUser(newUser, httpSession), new Message<>(false, errorStackMessages));
@@ -65,7 +65,7 @@ public class UserServiceTest {
     public void getPlayer() {
 
         ErrorStackMessages errorStackMessages = new ErrorStackMessages();
-        errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
+        errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
 
         assertEquals(userService.getPlayer(null), new Message<>(false, errorStackMessages));
 
