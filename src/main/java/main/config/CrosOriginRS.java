@@ -1,8 +1,6 @@
 package main.config;
 
 import main.properties.FileStorageProperties;
-import main.service.avatars.AvatarStorageService;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

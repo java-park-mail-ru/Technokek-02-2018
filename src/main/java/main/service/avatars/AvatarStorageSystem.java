@@ -3,8 +3,6 @@ package main.service.avatars;
 import main.domain.User;
 import main.properties.FileStorageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
