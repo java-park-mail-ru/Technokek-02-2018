@@ -33,8 +33,8 @@ public class UserApiController {
     }
 
     @PostMapping(value = "/signup", produces = "application/json")
-    public Message register(@RequestBody User newbie) throws Exception {
-        return userService.registUser(newbie);
+    public Message register(@RequestBody User newbie, HttpSession httpSession) throws Exception {
+        return userService.registUser(newbie, httpSession);
     }
 
     @PostMapping(value = "/login", produces = "application/json")
