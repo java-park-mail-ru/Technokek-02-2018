@@ -2,8 +2,8 @@ package main.services;
 
 import main.dao.UserDao;
 import main.domain.User;
-import main.models.Error.ErrorStackMessages;
-import main.models.Error.ErrorTypes;
+import main.models.error.ErrorStackMessages;
+import main.models.error.ErrorTypes;
 import main.models.Message;
 import main.models.PlayerMessage;
 import main.service.UserService;
@@ -43,7 +43,7 @@ public class UserServiceTest {
         final User newUser = new User( (long) 9,"dsf", "login", "password", null, 0, 0);
 
         ErrorStackMessages errorStackMessages = new ErrorStackMessages();
-        errorStackMessages.addFieldError("email", ErrorTypes.ERRORS_MAP.get(ErrorTypes.USER_ALREADY_EXISTS));
+        errorStackMessages.addFieldError("email", ErrorTypes.errorsMap.get(ErrorTypes.userAlreadyExists));
 
         assertEquals(userService.registUser(newUser, httpSession), new Message<>(true, new PlayerMessage(newUser)));
         assertEquals(userService.registUser(newUser, httpSession), new Message<>(false, errorStackMessages));
@@ -65,7 +65,7 @@ public class UserServiceTest {
     public void getPlayer() {
 
         ErrorStackMessages errorStackMessages = new ErrorStackMessages();
-        errorStackMessages.addGlobalError(ErrorTypes.ERRORS_MAP.get(ErrorTypes.NOT_AUTHORIZED));
+        errorStackMessages.addGlobalError(ErrorTypes.errorsMap.get(ErrorTypes.notAuthorized));
 
         assertEquals(userService.getPlayer(null), new Message<>(false, errorStackMessages));
 

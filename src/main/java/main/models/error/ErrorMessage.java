@@ -1,4 +1,4 @@
-package main.models.Error;
+package main.models.error;
 
 public class ErrorMessage {
 

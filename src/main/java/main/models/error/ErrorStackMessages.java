@@ -1,4 +1,4 @@
-package main.models.Error;
+package main.models.error;
 
 import java.util.ArrayList;
 import java.util.HashMap;
