@@ -32,7 +32,7 @@ public class UserApiController {
         return userService.getPlayer(id);
     }
 
-    @PostMapping(value = "/singup", produces = "application/json")
+    @PostMapping(value = "/signup", produces = "application/json")
     public Message register(@RequestBody User newbie) throws Exception {
         return userService.registUser(newbie);
     }

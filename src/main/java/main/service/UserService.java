@@ -23,6 +23,10 @@ public class UserService {
     private SingleplayerSystemDao singleplayerDao;
     private MultiplayerSystemDao multiplayerDao;
     private HistoryDaoSystem historyDaoSystem;
+    private Paginator<SingleplayerMessage> singplayMes;
+    private Paginator<MultiplayerMessage> multMes;
+    private Paginator<HistorySingleplayerMessage> histSingMes;
+    private Paginator<HistoryMultiplayerMessage> histMultMes;
 
     public UserService(UserDao userDao, SingleplayerSystemDao singleplayerDao,
                        MultiplayerSystemDao multiplayerDao, HistoryDaoSystem historyDaoSystem) {
@@ -30,6 +34,10 @@ public class UserService {
         this.singleplayerDao = singleplayerDao;
         this.multiplayerDao = multiplayerDao;
         this.historyDaoSystem = historyDaoSystem;
+        this.singplayMes = new Paginator<>();
+        this.multMes = new Paginator<>();
+        this.histSingMes = new Paginator<>();
+        this.histMultMes = new Paginator<>();
     }
 
     public Message registUser(User newbie) throws Exception {
@@ -69,7 +77,7 @@ public class UserService {
             return new Message<PlayerMessage>(true, new PlayerMessage(curUser));
         }
 
-        public Message getScoreBoardSingleplayer(HttpSession session, Long page) {
+        public Message getScoreBoardSingleplayer(HttpSession session, Integer page) {
 
             final Long myId = (Long) session.getAttribute("userId");
             final HashMap<String, List> scoreboard = new HashMap<>();
@@ -86,11 +94,11 @@ public class UserService {
 
 
                 scoreboard.put("me", null);
-                scoreboard.put("anoyher", gameMessages);
+                scoreboard.put("anoyher", singplayMes.paginate(page, gameMessages));
 
                 System.out.println(gameMessages);
 
-                return new Message<>(true, gameMessages);
+                return new Message<>(true, scoreboard);
             }
 
             final List<SingleplayerMessage> another = new ArrayList<>();
@@ -103,12 +111,12 @@ public class UserService {
             final List<SingleplayerMessage> me = new ArrayList<>();
             me.add(new SingleplayerMessage(userDao, curUserGame));
             scoreboard.put("me", me);
-            scoreboard.put("another", another);
+            scoreboard.put("another", singplayMes.paginate(page,another));
             return new Message<HashMap>(true, scoreboard);
 
         }
 
-        public Message getScoreBoardMultiplayer(HttpSession session, Long page) {
+        public Message getScoreBoardMultiplayer(HttpSession session, Integer page) {
 
             final Long myId = (Long) session.getAttribute("userId");
             final HashMap<String, List> scoreboard = new HashMap<>();
@@ -122,7 +130,7 @@ public class UserService {
                 }
 
                 scoreboard.put("me", null);
-                scoreboard.put("anoyher", gameMessages);
+                scoreboard.put("anoyher", multMes.paginate(page, gameMessages));
                 return new Message<HashMap>(true, scoreboard);
             }
 
@@ -136,11 +144,11 @@ public class UserService {
             final List<MultiplayerMessage> me = new ArrayList<>();
             me.add(new MultiplayerMessage(userDao, curUserGame));
             scoreboard.put("me", me);
-            scoreboard.put("another", another);
+            scoreboard.put("another", multMes.paginate(page, another));
             return new Message<HashMap>(true, scoreboard);
         }
 
-        public Message getHistorySingleplayer(HttpSession session, Long page) {
+        public Message getHistorySingleplayer(HttpSession session, Integer page) {
             final Long myId = (Long) session.getAttribute("userId");
             if (myId == null) {
                 return new Message<String>(false, "NOT_LOGINED");
@@ -155,10 +163,10 @@ public class UserService {
             for (HistorySingleplayer game : historyDb) {
                 history.add(new HistorySingleplayerMessage(singleplayerDao, game));
             }
-            return new Message<List>(true, history);
+            return new Message<List>(true, histSingMes.paginate(page, history));
         }
 
-        public Message getHistoryMultiplayer(HttpSession session, Long page) {
+        public Message getHistoryMultiplayer(HttpSession session, Integer page) {
             final Long myId = (Long) session.getAttribute("userId");
             if (myId == null) {
                 return new Message<String>(false, "NOT_LOGINED");
@@ -173,7 +181,7 @@ public class UserService {
             for (HistoryMultiplayer game : historyDb) {
                 history.add(new HistoryMultiplayerMessage(userDao, multiplayerDao, game));
             }
-            return new Message<List>(true, history);
+            return new Message<List>(true, histMultMes.paginate(page, history));
         }
 
         public Message getPlayer(Long id) {
