@@ -26,10 +26,9 @@ public class Paginator<T> {
         }
 
 
-        if (page*10 >= array.size()) {
+        if (page * 10 >= array.size()) {
             return array.subList((page - 1) * 10, (array.size() > 0) ? array.size() - 1 : 0);
-        }
-        else {
+        } else {
             return array.subList((page - 1) * 10, page * 10);
         }
 
