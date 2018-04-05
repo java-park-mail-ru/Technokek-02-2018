@@ -111,7 +111,7 @@ public class UserService {
             final List<SingleplayerMessage> me = new ArrayList<>();
             me.add(new SingleplayerMessage(userDao, curUserGame));
             scoreboard.put("me", me);
-            scoreboard.put("another", singplayMes.paginate(page,another));
+            scoreboard.put("another", singplayMes.paginate(page, another));
             return new Message<HashMap>(true, scoreboard);
 
         }
