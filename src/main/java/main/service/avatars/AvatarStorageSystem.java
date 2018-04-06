@@ -31,6 +31,7 @@ public class AvatarStorageSystem implements AvatarStorageService {
 
     @Override
     public void saveAvatar(MultipartFile file, User curUser) {
+        System.out.println("тут");
         final String filename = StringUtils.cleanPath(curUser.getId() + file.getOriginalFilename());
         try {
             if (file.isEmpty()) {

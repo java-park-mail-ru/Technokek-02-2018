@@ -30,7 +30,7 @@ public class AvatarUploadController {
         return AvatarControllerService.dropAvatar(avatar, avatarStorageService);
     }
 
-    @PostMapping("/upload/avatar/")
+    @PostMapping("/upload/avatar")
     public Message<String> handleFileUpload(@RequestParam("file") MultipartFile file, HttpSession session) {
         return avatarControllerService.setAvatar(file, avatarStorageService, session);
     }

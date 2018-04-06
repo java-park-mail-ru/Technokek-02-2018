@@ -28,6 +28,7 @@ public class AvatarControllerService {
     }
 
     public Message<String> setAvatar(MultipartFile file, AvatarStorageService avatarStorageService, HttpSession session) {
+        System.out.println("kekekeke");
         final Long id = (Long) session.getAttribute("userId");
         if (id == null) {
             return new Message<String>(false, "NOT_LOGINED");
