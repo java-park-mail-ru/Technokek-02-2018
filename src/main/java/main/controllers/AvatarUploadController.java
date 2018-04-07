@@ -31,7 +31,7 @@ public class AvatarUploadController {
     }
 
     @PostMapping("/upload/avatar")
-    public Message<String> handleFileUpload( MultipartFile file, HttpSession session) {
+    public Message<String> handleFileUpload(@RequestParam("file") MultipartFile file, HttpSession session) {
         return avatarControllerService.setAvatar(file, avatarStorageService, session);
     }
 
