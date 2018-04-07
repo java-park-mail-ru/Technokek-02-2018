@@ -10,7 +10,7 @@ DECLARE
 BEGIN
   IF TG_OP = 'INSERT' THEN
     IF TG_TABLE_NAME = 'Singleplayer' THEN
-      scoreUp := (select from users where id = NOW.user_id);
+      scoreUp := (select score from users where id = NOW.user_id);
       IF NEW.score > scoreUp THEN
         UPDATE users SET score = NEW.score where id = NEW.user_id;
         RETURN NEW;
