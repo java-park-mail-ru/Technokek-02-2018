@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.stream.Stream;
 
 @Service
 public class AvatarStorageSystem implements AvatarStorageService {
@@ -27,20 +27,20 @@ public class AvatarStorageSystem implements AvatarStorageService {
         this.rootLocation = Paths.get(properties.getLocation() + "user_api_files/avatars/");
     }
 
+
     @Override
     public void saveAvatar(MultipartFile file, User curUser) {
-        final String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        final String filename = StringUtils.cleanPath(curUser.getId() + "/" + file.getOriginalFilename());
         try {
             if (file.isEmpty()) {
                 throw new AvatarGeneralException("Failed to store empty file " + filename);
             }
-            if (filename.contains("..")) {
-                // This is a security check
+            if (filename.contains("..") || filename.contains("~")) {
                 throw new AvatarGeneralException(
                         "Cannot store file with relative path outside current directory "
                                 + filename);
             }
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(curUser.getId() + filename),
+            Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
                     StandardCopyOption.REPLACE_EXISTING);
             curUser.setAvatar(filename);
         } catch (IOException e) {
@@ -48,17 +48,6 @@ public class AvatarStorageSystem implements AvatarStorageService {
         }
     }
 
-    @Override
-    public Stream<Path> getAllAvatars() {
-        try {
-            return Files.walk(this.rootLocation, 1)
-                    .filter(path -> !path.equals(this.rootLocation))
-                    .map(this.rootLocation::relativize);
-        } catch (IOException e) {
-            throw new AvatarGeneralException("Failed to read stored files", e);
-        }
-
-    }
 
     @Override
     public Path getPath(String filename) {
@@ -83,6 +72,7 @@ public class AvatarStorageSystem implements AvatarStorageService {
     }
 
     @Override
+    @PostConstruct
     public void init() {
         try {
             Files.createDirectories(rootLocation);

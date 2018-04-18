@@ -21,7 +21,7 @@ public class AvatarControllerService {
         this.userDao = userDao;
     }
 
-    public static ResponseEntity<Resource> dropAvatar(String avatar, AvatarStorageService avatarStorageService) {
+    public static ResponseEntity<Resource> getAvatar(String avatar, AvatarStorageService avatarStorageService) {
         final Resource file = avatarStorageService.loadAvatarResource(avatar);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\""  + file.getFilename() + '"').body(file);

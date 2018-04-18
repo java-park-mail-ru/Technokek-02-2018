@@ -42,17 +42,6 @@ public class FileUploadTests {
 
 
     @Test
-    public void shouldListAllFiles() throws Exception {
-        given(this.storageService.getAllAvatars())
-                .willReturn(Stream.of(Paths.get("first.png"), Paths.get("second.png")));
-
-        this.mvc.perform(get("/")).andExpect(status().isOk())
-                .andExpect(model().attribute("files",
-                        Matchers.contains("http://localhost:8080/avatars/second.png",
-                                "http://localhost:8080/avatars/second.png")));
-    }
-
-    @Test
     public void shouldSaveUploadedFile() throws Exception {
         final MockMultipartFile multipartFile = new MockMultipartFile("file", "test.png",
                 "text/plain", "Spring Framework".getBytes());

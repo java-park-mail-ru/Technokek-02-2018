@@ -47,7 +47,8 @@ public class UserApiControllerTest {
         password = faker.internet().password();
     }
 
-    public void singup() throws Exception {
+    @Test
+    public void signup() throws Exception {
         mockMvc.perform(
                 post("/signup")
                         .contentType("application/json")

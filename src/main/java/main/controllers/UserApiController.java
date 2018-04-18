@@ -32,9 +32,9 @@ public class UserApiController {
         return userService.getPlayer(id);
     }
 
-    @PostMapping(value = "/singup", produces = "application/json")
-    public Message register(@RequestBody User newbie) throws Exception {
-        return userService.registUser(newbie);
+    @PostMapping(value = "/signup", produces = "application/json")
+    public Message register(@RequestBody User newbie, HttpSession httpSession) throws Exception {
+        return userService.registUser(newbie, httpSession);
     }
 
     @PostMapping(value = "/login", produces = "application/json")
@@ -42,7 +42,7 @@ public class UserApiController {
         return userService.login(user, session);
     }
 
-    @PostMapping(value = "/edit", produces = "application/json")
+    @PostMapping(value = "/user/edit", produces = "application/json")
     public Message editProfile(@RequestBody User user, HttpSession session) {
         return userService.editUser(user, session);
     }

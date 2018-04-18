@@ -14,8 +14,6 @@ public interface AvatarStorageService {
 
     void saveAvatar(MultipartFile file, User curUser);
 
-    Stream<Path> getAllAvatars();
-
     Path getPath(String filename);
 
     Resource loadAvatarResource(String filename);

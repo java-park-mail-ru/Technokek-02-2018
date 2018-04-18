@@ -27,10 +27,10 @@ public class AvatarUploadController {
     @GetMapping(value = "/avatars/{avatar:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String avatar) {
-        return AvatarControllerService.dropAvatar(avatar, avatarStorageService);
+        return AvatarControllerService.getAvatar(avatar, avatarStorageService);
     }
 
-    @PostMapping("/upload/avatar/")
+    @PostMapping("/upload/avatar")
     public Message<String> handleFileUpload(@RequestParam("file") MultipartFile file, HttpSession session) {
         return avatarControllerService.setAvatar(file, avatarStorageService, session);
     }
