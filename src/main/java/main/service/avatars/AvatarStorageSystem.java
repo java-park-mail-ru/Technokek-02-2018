@@ -37,12 +37,7 @@ public class AvatarStorageSystem implements AvatarStorageService {
             if (file.isEmpty()) {
                 throw new AvatarGeneralException("Failed to store empty file " + filename);
             }
-            if (filename.contains("..")) {
-                throw new AvatarGeneralException(
-                        "Cannot store file with relative path outside current directory "
-                                + filename);
-            }
-            if (filename.contains("~")) {
+            if (filename.contains("..") || filename.contains("~")) {
                 throw new AvatarGeneralException(
                         "Cannot store file with relative path outside current directory "
                                 + filename);
