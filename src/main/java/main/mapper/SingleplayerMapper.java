@@ -1,10 +1,7 @@
 package main.mapper;
 
-import main.domain.HistorySingleplayer;
 import main.domain.Singleplayer;
 import org.springframework.jdbc.core.RowMapper;
-
-import java.util.Date;
 
 public class SingleplayerMapper {
 

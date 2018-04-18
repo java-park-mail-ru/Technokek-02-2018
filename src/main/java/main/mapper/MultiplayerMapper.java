@@ -1,10 +1,7 @@
 package main.mapper;
 
-import main.domain.HistoryMultiplayer;
 import main.domain.Multiplayer;
 import org.springframework.jdbc.core.RowMapper;
-
-import java.util.Date;
 
 public class MultiplayerMapper {
     public static final RowMapper<Multiplayer> MULTIPLAYER_MAPPER = (res, num) -> {
