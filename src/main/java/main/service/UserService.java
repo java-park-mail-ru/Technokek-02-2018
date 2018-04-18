@@ -158,46 +158,10 @@ public class UserService {
         return new Message<HashMap>(true, scoreboard);
     }
 
-    public Message getHistorySingleplayer(HttpSession session, Integer page) {
-        final Long myId = (Long) session.getAttribute("userId");
-        ErrorStackMessages errorStackMessages = new ErrorStackMessages();
-        if (myId == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
-            return new Message<>(false, errorStackMessages);
-        }
-
-        final User curUser = userDao.getById(myId);
-        if (curUser == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
-            return new Message<>(false, errorStackMessages);
-        }
-        final List<HistorySingleplayer> historyDb = historyDaoSystem.getUserHistorySingleplayer(myId);
-        final List<HistorySingleplayerMessage> history = new ArrayList<>();
-        for (HistorySingleplayer game : historyDb) {
-            history.add(new HistorySingleplayerMessage(singleplayerDao, game));
-        }
-        return new Message<List>(true, histSingMes.paginate(page, history));
+    public void getHistorySingleplayer(HttpSession session, Integer page) {
     }
 
-    public Message getHistoryMultiplayer(HttpSession session, Integer page) {
-        final Long myId = (Long) session.getAttribute("userId");
-        ErrorStackMessages errorStackMessages = new ErrorStackMessages();
-        if (myId == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
-            return new Message<>(false, errorStackMessages);
-        }
-
-        final User curUser = userDao.getById(myId);
-        if (curUser == null) {
-            errorStackMessages.addGlobalError(ErrorTypes.getErrorsMap().get(ErrorTypes.getNotAuthorized()));
-            return new Message<>(false, errorStackMessages);
-        }
-        final List<HistoryMultiplayer> historyDb = historyDaoSystem.getUserHistoryMultiplayer(myId);
-        final List<HistoryMultiplayerMessage> history = new ArrayList<>();
-        for (HistoryMultiplayer game : historyDb) {
-            history.add(new HistoryMultiplayerMessage(userDao, multiplayerDao, game));
-        }
-        return new Message<List>(true, histMultMes.paginate(page, history));
+    public void getHistoryMultiplayer(HttpSession session, Integer page) {
     }
 
     public Message getPlayer(Long id) {

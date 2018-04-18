@@ -3,34 +3,22 @@ CREATE TABLE users (
   nickname VARCHAR(255),
   email    VARCHAR(255),
   password VARCHAR(255),
-  avatar VARCHAR(255),
-  games_number INTEGER,
-  score INTEGER
+  avatar VARCHAR(255) DEFAULT NULL,
+  games_number INTEGER DEFAULT 0,
+  score INTEGER DEFAULT 0
 );
 
 CREATE TABLE singleplayer (
   game_id SERIAL primary key,
   score   INTEGER,
-  user_id INTEGER REFERENCES users(id)
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+  date TIMESTAMP  DEFAULT NOW()
 );
 
 CREATE TABLE multiplayer (
   game_id SERIAL primary key,
   score   INTEGER,
-  user_first_id INTEGER REFERENCES users(id),
-  user_second_id INTEGER REFERENCES users(id)
-);
-
-CREATE TABLE history_singleplayer (
-  id SERIAL primary key,
-  user_id INTEGER REFERENCES users(id),
-  game_id INTEGER REFERENCES singleplayer(game_id),
-  date TIMESTAMP
-);
-
-CREATE TABLE history_multiplayer (
-  id SERIAL primary key,
-  user_id INTEGER REFERENCES users(id),
-  game_id INTEGER REFERENCES multiplayer(game_id),
-  date TIMESTAMP
+  user_first_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+  user_second_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+  date TIMESTAMP DEFAULT NOW()
 );

@@ -21,14 +21,13 @@ public class AvatarControllerService {
         this.userDao = userDao;
     }
 
-    public static ResponseEntity<Resource> dropAvatar(String avatar, AvatarStorageService avatarStorageService) {
+    public static ResponseEntity<Resource> getAvatar(String avatar, AvatarStorageService avatarStorageService) {
         final Resource file = avatarStorageService.loadAvatarResource(avatar);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\""  + file.getFilename() + '"').body(file);
     }
 
     public Message<String> setAvatar(MultipartFile file, AvatarStorageService avatarStorageService, HttpSession session) {
-        System.out.println("kekekeke");
         final Long id = (Long) session.getAttribute("userId");
         if (id == null) {
             return new Message<String>(false, "NOT_LOGINED");

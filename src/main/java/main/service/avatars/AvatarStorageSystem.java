@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.annotation.ServletSecurity;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -31,14 +32,17 @@ public class AvatarStorageSystem implements AvatarStorageService {
 
     @Override
     public void saveAvatar(MultipartFile file, User curUser) {
-        System.out.println("тут");
-        final String filename = StringUtils.cleanPath(curUser.getId() + file.getOriginalFilename());
+        final String filename = StringUtils.cleanPath(curUser.getId() + "/" + file.getOriginalFilename());
         try {
             if (file.isEmpty()) {
                 throw new AvatarGeneralException("Failed to store empty file " + filename);
             }
             if (filename.contains("..")) {
-                // This is a security check
+                throw new AvatarGeneralException(
+                        "Cannot store file with relative path outside current directory "
+                                + filename);
+            }
+            if (filename.contains("~")) {
                 throw new AvatarGeneralException(
                         "Cannot store file with relative path outside current directory "
                                 + filename);
@@ -51,17 +55,6 @@ public class AvatarStorageSystem implements AvatarStorageService {
         }
     }
 
-    @Override
-    public Stream<Path> getAllAvatars() {
-        try {
-            return Files.walk(this.rootLocation, 1)
-                    .filter(path -> !path.equals(this.rootLocation))
-                    .map(this.rootLocation::relativize);
-        } catch (IOException e) {
-            throw new AvatarGeneralException("Failed to read stored files", e);
-        }
-
-    }
 
     @Override
     public Path getPath(String filename) {

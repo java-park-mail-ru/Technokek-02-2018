@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @SpringBootConfiguration
 @EnableConfigurationProperties(FileStorageProperties.class)
-public class CrosOriginRS {
+public class Cross {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {

@@ -15,13 +15,4 @@ public class SingleplayerMapper {
 
         return new Singleplayer(id, userId, score);
     };
-
-    public static final RowMapper<HistorySingleplayer> HISTORY_MAPPER = (res, num) -> {
-        Long id = res.getLong("id");
-        Long userId = res.getLong("user_id");
-        Long gameId = res.getLong("game_id");
-        Date date = res.getDate("date");
-
-        return new HistorySingleplayer(id, userId, gameId, date);
-    };
 }

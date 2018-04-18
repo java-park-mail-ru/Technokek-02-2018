@@ -15,13 +15,4 @@ public class MultiplayerMapper {
 
         return new Multiplayer(id, userIdFirst, userIdSecond, score);
     };
-
-    public static final RowMapper<HistoryMultiplayer> HISTORY_MAPPER = (res, num) -> {
-        Long id = res.getLong("id");
-        Long userId = res.getLong("user_id");
-        Long gameId = res.getLong("game_id");
-        Date date = res.getDate("date");
-
-        return new HistoryMultiplayer(id, userId, gameId, date);
-    };
 }

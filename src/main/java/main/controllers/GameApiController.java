@@ -33,8 +33,7 @@ public class GameApiController {
     }
 
     @GetMapping(value = "/history/singleplayer/{page}", produces = "application/json")
-    public Message getHistorySingle(@PathVariable("page") Integer page, HttpSession session) {
-        return userService.getHistorySingleplayer(session, page);
+    public void getHistorySingle(@PathVariable("page") Integer page, HttpSession session) {
     }
 
     @GetMapping(value = "/scoreboard/multiplayer/{page}", produces = "application/json")
@@ -43,8 +42,7 @@ public class GameApiController {
     }
 
     @GetMapping(value = "/history/multiplayer/{page}", produces = "application/json")
-    public Message getHistoryMulti(@PathVariable("page") Integer page, HttpSession session) {
-        return userService.getHistoryMultiplayer(session, page);
+    public void getHistoryMulti(@PathVariable("page") Integer page, HttpSession session) {
     }
 
     @GetMapping(value = "/about", produces = "application/json")
