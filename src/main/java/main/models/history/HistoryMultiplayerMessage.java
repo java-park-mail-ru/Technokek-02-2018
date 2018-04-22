@@ -1,51 +1,31 @@
 package main.models.history;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import main.dao.MultiplayerSystemDao;
-import main.dao.UserDao;
-import main.domain.HistoryMultiplayer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import javax.persistence.Entity;
+import java.sql.Timestamp;
+import java.util.Objects;
 
-@Service
+@Entity
 public class HistoryMultiplayerMessage {
 
-    @JsonIgnore
-    private UserDao userDao;
-
-    @JsonIgnore
-    private MultiplayerSystemDao multiplayerSystemDao;
-
-    private Date date;
-    private String partner;
+    private Long id;
     private Long score;
+    private String partner;
+    private Timestamp date;
 
-    @Autowired
-    public HistoryMultiplayerMessage(UserDao userDao, MultiplayerSystemDao multiplayerSystemDao) {
-        this.userDao = userDao;
-        this.multiplayerSystemDao = multiplayerSystemDao;
-    }
-
-    public HistoryMultiplayerMessage(UserDao userDao, MultiplayerSystemDao multiplayerSystemDao, HistoryMultiplayer historyMultiplayer) {
-        this.userDao = userDao;
-        this.multiplayerSystemDao = multiplayerSystemDao;
-        Long patnerId = this.multiplayerSystemDao.getById(historyMultiplayer.getGameId()).getUserFirstId();
-        if (patnerId.equals(historyMultiplayer.getUserId())) {
-            patnerId = this.multiplayerSystemDao.getById(historyMultiplayer.getGameId()).getUserSecondId();
-        }
-        this.partner = this.userDao.getById(patnerId).getNickname();
-        this.date = historyMultiplayer.getDate();
-        this.score = this.multiplayerSystemDao.getById(historyMultiplayer.getGameId()).getScore();
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
+    public HistoryMultiplayerMessage(Long id, Long score, String partner, Timestamp date) {
+        this.id = id;
+        this.score = score;
+        this.partner = partner;
         this.date = date;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getScore() {
@@ -56,19 +36,36 @@ public class HistoryMultiplayerMessage {
         this.score = score;
     }
 
-    public UserDao getUserDao() {
-        return userDao;
+    public String getPartner() {
+        return partner;
     }
 
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    public void setPartner(String partner) {
+        this.partner = partner;
     }
 
-    public MultiplayerSystemDao getMultiplayerSystemDao() {
-        return multiplayerSystemDao;
+    public Timestamp getDate() {
+        return date;
     }
 
-    public void setMultiplayerSystemDao(MultiplayerSystemDao multiplayerSystemDao) {
-        this.multiplayerSystemDao = multiplayerSystemDao;
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HistoryMultiplayerMessage that = (HistoryMultiplayerMessage) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(score, that.score) &&
+                Objects.equals(partner, that.partner) &&
+                Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, score, partner, date);
     }
 }

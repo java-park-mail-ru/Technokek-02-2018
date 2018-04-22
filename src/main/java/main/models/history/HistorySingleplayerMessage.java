@@ -1,39 +1,39 @@
 package main.models.history;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import main.dao.SingleplayerSystemDao;
-import main.domain.HistorySingleplayer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.sql.Timestamp;
+import java.util.Objects;
 
-import java.util.Date;
-
-@Service
+@Entity
 public class HistorySingleplayerMessage {
 
-    @JsonIgnore
-    private final SingleplayerSystemDao singleplayerDao;
-
-    private Date date;
+    @Id
+    private Long id;
+    private Timestamp date;
     private Long score;
+    private Long user;
 
-    @Autowired
-    public HistorySingleplayerMessage(SingleplayerSystemDao singleplayerDao) {
-        this.singleplayerDao = singleplayerDao;
+    public HistorySingleplayerMessage(Long id, Timestamp date, Long score, Long user) {
+        this.id = id;
+        this.date = date;
+        this.score = score;
+        this.user = user;
     }
 
-    public HistorySingleplayerMessage(SingleplayerSystemDao singleplayerDao, HistorySingleplayer historySingleplayer) {
-        this.singleplayerDao = singleplayerDao;
-        this.date = historySingleplayer.getDate();
-        this.score = this.singleplayerDao.getById(historySingleplayer.getGameId()).getScore();
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -43,5 +43,30 @@ public class HistorySingleplayerMessage {
 
     public void setScore(Long score) {
         this.score = score;
+    }
+
+    public Long getUser() {
+        return user;
+    }
+
+    public void setUser(Long user) {
+        this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HistorySingleplayerMessage that = (HistorySingleplayerMessage) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(date, that.date) &&
+                Objects.equals(score, that.score) &&
+                Objects.equals(user, that.user);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, date, score, user);
     }
 }

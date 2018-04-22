@@ -1,6 +1,7 @@
 package main.controllers;
 
 import main.models.Message;
+import main.service.GameService;
 import main.service.UserService;
 
 import org.json.simple.parser.ParseException;
@@ -21,15 +22,15 @@ import org.json.simple.parser.JSONParser;
 @RestController
 public class GameApiController {
 
-    private final UserService userService;
+    private final GameService gameService;
 
-    public GameApiController(UserService userService) {
-        this.userService = userService;
+    public GameApiController(UserService userService, GameService gameService) {
+        this.gameService = gameService;
     }
 
     @GetMapping(value = "/scoreboard/singleplayer/{page}", produces = "application/json")
     public Message getScoreBoardSingle(@PathVariable("page") Integer page, HttpSession session) {
-        return userService.getScoreBoardSingleplayer(session, page);
+        return gameService.getScoreBoardSingleplayer(session, page);
     }
 
     @GetMapping(value = "/history/singleplayer/{page}", produces = "application/json")
@@ -38,11 +39,12 @@ public class GameApiController {
 
     @GetMapping(value = "/scoreboard/multiplayer/{page}", produces = "application/json")
     public Message getScoreBoardMulti(@PathVariable("page") Integer page, HttpSession session) {
-        return userService.getScoreBoardMultiplayer(session, page);
+        return gameService.getScoreBoardMultiplayer(session, page);
     }
 
     @GetMapping(value = "/history/multiplayer/{page}", produces = "application/json")
     public void getHistoryMulti(@PathVariable("page") Integer page, HttpSession session) {
+        return gameService.getHistorySingleplayer();
     }
 
     @GetMapping(value = "/about", produces = "application/json")

@@ -1,9 +1,13 @@
 package main.dao;
 
+import main.models.history.HistorySingleplayerMessage;
+
+import java.util.List;
+
 public interface HistoryDao {
 
-    void getUserHistorySingleplayer(Long id);
+    List<HistorySingleplayerMessage> getUserHistorySingleplayer(Integer page, Long id);
 
-    void getUserHistoryMultiplayer(Long id);
+    List<HistorySingleplayerMessage> getUserHistoryMultiplayer(Integer page, Long id);
 
 }
